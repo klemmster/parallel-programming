@@ -14,6 +14,8 @@ int main (int argc, char**argv){
 
 	int rank, size;
 
+    MPI_Status status;
+
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 
@@ -23,10 +25,10 @@ int main (int argc, char**argv){
 	char buf[256];
 
 	if( rank == 0 ){
-		length = strlen(argv[1]);
+		length = strlen(argv[1])+1;
 		MPI_Send(argv[1], length, MPI_CHAR, 1, 42, MPI_COMM_WORLD);
 	} else {
-		MPI_Recv(&buf, 256, MPI_CHAR, rank-1, 42, MPI_COMM_WORLD, NULL);
+		MPI_Recv(&buf, 256, MPI_CHAR, rank-1, 42, MPI_COMM_WORLD, &status);
 		if( rank != size-1 ){
 			length = strlen( buf );
 			MPI_Send(argv[1], length, MPI_CHAR, rank+1, 42, MPI_COMM_WORLD);

@@ -24,7 +24,7 @@ int main (int argc, char**argv){
 	char buf[256];
 
 	if( rank == 0 ){
-		length = strlen(argv[1]);
+		length = strlen(argv[1])+1;
 		MPI_Bcast(argv[1], length, MPI_CHAR, 0,
 MPI_COMM_WORLD);
 
