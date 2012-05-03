@@ -66,7 +66,7 @@ With the parameters given, $L_i$ can be described as $\alpha_i + \frac{n_i}{\bet
 Therefore, the final equation is: $\sum\limits_{i=0}^{Pi-1} \alpha_i + \frac{n_i}{\beta_i}$
 As L is unchanged this is equal to: $M = (pi-1) * (\alpha + \frac{n}{\beta})$, with M being the message delay.
 \\\\
-\textbf{(c)}\hspace{1em} Another idea to broadcast the messages is to use a binary tree.
+\textbf{(c\_1)}\hspace{1em} Another idea to broadcast the messages is to use a binary tree.
 \begin{figure}[!htbp]
     \begin{center}
         \includegraphics[scale=1]{3c_1.pdf}
@@ -82,6 +82,7 @@ It can easily be seen, that a node can at most send two messages. Thus $M = 2Lh$
 $h$ can be acquired by re-arranging the equation given above: $h=\log_2 (P_n-1)$
 Thus, the final equation for estimating $M$ is $M= 2*(\alpha_i + \frac{n_i}{\beta_i}) * \log_2 (P_n-1)2$
 
+
 \begin{figure}[!htbp]
     \begin{center}
         \includegraphics[scale=1]{3c_2.pdf}
@@ -89,9 +90,27 @@ Thus, the final equation for estimating $M$ is $M= 2*(\alpha_i + \frac{n_i}{\bet
     \caption{Sub Binary Tree}
     \label{SubBinTree}
 \end{figure}
+
+\textbf{c\_2}
+
+Yet another alternative is using a simple star structure.
+$P0$ sends a message to all the other nodes.
+As broadcast is not allowed the message delay can be calculated in short: $M = (P-1)*L$ or with $L$ substituted: $M = (P-1) * (\alpha_i + \frac{n_i}{\beta_i})$
+\begin{figure}[!htbp]
+    \begin{center}
+        \includegraphics[scale=1]{3c_3.pdf}
+    \end{center}
+    \caption{Star}
+    \label{Star}
+\end{figure}
+
+
+
 $ $ \\
 \textbf{How latency, bandwidth and message size influence performance}
 
 \hspace{1em}Latency is a constant factor, that just adds to the overall delay.(See equation above). Messagesize and bandwidth correlate to each other in a way that they can be left out of the equation if the bandwidth is just big enough.
 The formula $\frac{messagesize}{bandwith}$ converges to 0 if the bandwidth is just big enough. Also, if there is not enough bandwidth available, the message size should be kept as small as possible to get a good performance.
+
+
 \end{document}
