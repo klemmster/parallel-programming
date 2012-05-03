@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ipe SYSTEM "ipe.dtd">
 <ipe version="70005" creator="Ipe 7.1.2">
-<info created="D:20120502233342" modified="D:20120502233455"/>
+<info created="D:20120502233342" modified="D:20120503124453"/>
 <ipestyle name="basic">
 <symbol name="arrow/arc(spx)">
 <path stroke="sym-stroke" fill="sym-stroke" pen="sym-pen">
@@ -249,13 +249,13 @@ h
 512 720 l
 512 720 l
 </path>
-<text transformations="translations" pos="166.965 687.685" stroke="black" type="label" width="11.761" height="6.808" depth="0" valign="baseline">P0</text>
-<text matrix="1 0 0 1 60.8895 10.5386" transformations="translations" pos="211.871 677.79" stroke="black" type="label" width="15.082" height="6.808" depth="0" valign="baseline">P1
+<text transformations="translations" pos="166.965 687.685" stroke="black" type="label" width="10.866" height="6.812" depth="1.49" valign="baseline">$P_0$</text>
+<text matrix="1 0 0 1 60.8895 10.5386" transformations="translations" pos="211.871 677.79" stroke="black" type="label" width="14.186" height="6.812" depth="1.49" valign="baseline">$P_1$
 </text>
-<text matrix="1 0 0 1 1.3511 -1.80146" transformations="translations" pos="387.279 692.134" stroke="black" type="label" width="11.761" height="6.808" depth="0" valign="baseline">P2</text>
-<text matrix="1 0 0 1 105.836 -5.40439" transformations="translations" pos="393.134 693.846" stroke="black" type="label" width="11.761" height="6.808" depth="0" valign="baseline">P3</text>
-<text transformations="translations" pos="224 736" stroke="black" type="label" width="11.208" height="6.808" depth="0" valign="baseline">L0</text>
-<text transformations="translations" pos="336 736" stroke="black" type="label" width="11.208" height="6.808" depth="0" valign="baseline">L1</text>
-<text transformations="translations" pos="448 736" stroke="black" type="label" width="11.208" height="6.808" depth="0" valign="baseline">L2</text>
+<text matrix="1 0 0 1 1.3511 -1.80146" transformations="translations" pos="387.279 692.134" stroke="black" type="label" width="10.866" height="6.812" depth="1.49" valign="baseline">$P_2$</text>
+<text matrix="1 0 0 1 105.836 -5.40439" transformations="translations" pos="393.134 693.846" stroke="black" type="label" width="10.866" height="6.812" depth="1.49" valign="baseline">$P_3$</text>
+<text transformations="translations" pos="224 736" stroke="black" type="label" width="11.25" height="6.812" depth="1.49" valign="baseline">$L_0$</text>
+<text transformations="translations" pos="336 736" stroke="black" type="label" width="11.25" height="6.812" depth="1.49" valign="baseline">$L_1$</text>
+<text transformations="translations" pos="448 736" stroke="black" type="label" width="11.25" height="6.812" depth="1.49" valign="baseline">$L_2$</text>
 </page>
 </ipe>

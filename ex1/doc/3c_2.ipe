@@ -238,12 +238,12 @@ h
 <path matrix="0.672685 0 0 0.672685 123.595 217.987" stroke="black" fill="black">
 32.8826 0 0 32.8826 160 736 e
 </path>
-<text matrix="1 0 0 1 140 106.923" transformations="translations" pos="166.965 687.685" stroke="black" type="label" width="11.761" height="6.808" depth="0" valign="baseline">P0</text>
-<text matrix="1 0 0 1 -8.34127 53.6155" transformations="translations" pos="211.871 677.79" stroke="black" type="label" width="15.082" height="6.808" depth="0" valign="baseline">P1
-</text>
-<text matrix="1 0 0 1 -209.549 -80.0198" transformations="translations" pos="393.134 693.846" stroke="black" type="label" width="11.761" height="6.808" depth="0" valign="baseline">P3</text>
-<text matrix="1 0 0 1 19.2308 9.23077" transformations="translations" pos="224 736" stroke="black" type="label" width="11.208" height="6.808" depth="0" valign="baseline">L0</text>
-<text matrix="1 0 0 1 -251.538 -53.0769" transformations="translations" pos="448 736" stroke="black" type="label" width="11.208" height="6.808" depth="0" valign="baseline">L2</text>
+<text matrix="1 0 0 1 140 106.923" transformations="translations" pos="166.965 687.685" stroke="black" type="label" width="11.761" height="6.808" depth="0" valign="baseline">$P_0$</text>
+<text matrix="1 0 0 1 -8.34127 53.6155" transformations="translations" pos="211.871 677.79" stroke="black" type="label" width="15.082" height="6.808" depth="0" valign="baseline">$P_1
+$</text>
+<text matrix="1 0 0 1 -209.549 -80.0198" transformations="translations" pos="393.134 693.846" stroke="black" type="label" width="11.761" height="6.808" depth="0" valign="baseline">$P_3$</text>
+<text matrix="1 0 0 1 19.2308 9.23077" transformations="translations" pos="224 736" stroke="black" type="label" width="11.208" height="6.808" depth="0" valign="baseline">$L_0$</text>
+<text matrix="1 0 0 1 -251.538 -53.0769" transformations="translations" pos="448 736" stroke="black" type="label" width="11.208" height="6.808" depth="0" valign="baseline">$L_2$</text>
 <path matrix="0.672685 0 0 0.672685 84.1568 154.167" stroke="black" fill="black">
 32.8826 0 0 32.8826 160 736 e
 </path>
@@ -260,8 +260,8 @@ h
 231.511 712.48 m
 256.896 654.788 l
 </path>
-<text transformations="translations" pos="253.05 616.326" stroke="black" type="label" width="11.761" height="6.808" depth="0" halign="center" valign="center">P4</text>
-<text transformations="translations" pos="252.066 682.539" stroke="black" type="label" width="11.208" height="6.808" depth="0" halign="center" valign="center">L3</text>
+<text transformations="translations" pos="253.05 616.326" stroke="black" type="label" width="11.761" height="6.808" depth="0" halign="center" valign="center">$P_4$</text>
+<text transformations="translations" pos="252.066 682.539" stroke="black" type="label" width="11.208" height="6.808" depth="0" halign="center" valign="center">$L_3$</text>
 <text matrix="1 0 0 1 26.3996 -1.82066" transformations="translations" pos="102.526 774.003" stroke="black" type="label" width="43.895" height="9.963" depth="0" halign="center" valign="center" size="Large">Level 1</text>
 <text matrix="1 0 0 1 33.2271 5.00683" transformations="translations" pos="95.2432 687.522" stroke="black" type="label" width="43.895" height="9.963" depth="0" halign="center" valign="center" size="Large">Level 2</text>
 <text matrix="1 0 0 1 45.5166 -5.46199" transformations="translations" pos="84.3192 633.812" stroke="black" type="label" width="43.895" height="9.963" depth="0" halign="center" valign="center" size="Large">Level 3</text>

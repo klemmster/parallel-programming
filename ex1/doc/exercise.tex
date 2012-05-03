@@ -39,7 +39,7 @@
 
 %% Title Page %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{Parallel Programming Assignment \#1} 
-\author{Marcel Karsten,\\ Patrick Lorenz,\\ Richard Klemm}
+\author{Marcel Karsten -- 343619,\\ Patrick Lorenz -- 341922,\\ Richard Klemm -- 343635 }
 \date{Due: Thursday, 03th January 2012} %%If commented, the current date is used.
 \maketitle
 
@@ -62,11 +62,11 @@
 \end{figure}
 
 It can easily be seen in [Figure \ref{SampleSetup}], it takes $\sum\limits_{i=0}^m L_i$ where $L$ is the delay between two nodes.
-With the parameters given, $L_i$ can be described as $\alpha_i + \frac{n_i}{\beta_i}$ where $i$ is in range $0 .. Pi-1$
-Therefore, the final equation is: $\sum\limits_{i=0}^{Pi-1} \alpha_i + \frac{n_i}{\beta_i}$
-As L is unchanged this is equal to: $M = (pi-1) * (\alpha + \frac{n}{\beta})$, with M being the message delay.
+With the parameters given, $L_i$ can be described as $\alpha_i + \frac{n_i}{\beta_i}$ where $i$ is in range $0 .. P_{i-1}$ .
+Therefore, the final equation is: $\sum\limits_{i=0}^{Pi-1} \alpha_i + \frac{n_i}{\beta_i}$ .
+As L is unchanged this is equal to: $M = (P_{i-1}) * (\alpha + \frac{n}{\beta})$, with M being the message delay.
 \\\\
-\textbf{(c\_1)}\hspace{1em} Another idea to broadcast the messages is to use a binary tree.
+\textbf{(c)\\ 1.}\hspace{1em}\\Another idea to broadcast the messages is to use a binary tree.
 \begin{figure}[!htbp]
     \begin{center}
         \includegraphics[scale=1]{3c_1.pdf}
@@ -75,12 +75,12 @@ As L is unchanged this is equal to: $M = (pi-1) * (\alpha + \frac{n}{\beta})$, w
     \label{BinTree}
 \end{figure}
 The binary tree has a number of nice properties, that are interesting for message passing.
-One of which is $P_n-1=2^h$, where  $h$ is the depth of the tree and $P_n$ the number of processes.
+One of which is $P_{n-1}=2^h$, where  $h$ is the depth of the tree and $P_n$ the number of processes.
 
 Nodes belonging to the same level can work in parallel, thus the problem can be reduced to a tree as seen in [Figure: \ref{SubBinTree}]
 It can easily be seen, that a node can at most send two messages. Thus $M = 2Lh$.
 $h$ can be acquired by re-arranging the equation given above: $h=\log_2 (P_n-1)$
-Thus, the final equation for estimating $M$ is $M= 2*(\alpha_i + \frac{n_i}{\beta_i}) * \log_2 (P_n-1)2$
+Thus, the final equation for estimating $M$ is $M= 2*(\alpha_i + \frac{n_i}{\beta_i}) * \log_2 (P_{n-1})$
 
 
 \begin{figure}[!htbp]
@@ -91,10 +91,10 @@ Thus, the final equation for estimating $M$ is $M= 2*(\alpha_i + \frac{n_i}{\bet
     \label{SubBinTree}
 \end{figure}
 
-\textbf{c\_2}
+\textbf{2.}
 
 Yet another alternative is using a simple star structure.
-$P0$ sends a message to all the other nodes.
+$P_0$ sends a message to all the other nodes.
 As broadcast is not allowed the message delay can be calculated in short: $M = (P-1)*L$ or with $L$ substituted: $M = (P-1) * (\alpha_i + \frac{n_i}{\beta_i})$
 \begin{figure}[!htbp]
     \begin{center}
@@ -109,7 +109,7 @@ As broadcast is not allowed the message delay can be calculated in short: $M = (
 $ $ \\
 \textbf{How latency, bandwidth and message size influence performance}
 
-\hspace{1em}Latency is a constant factor, that just adds to the overall delay.(See equation above). Messagesize and bandwidth correlate to each other in a way that they can be left out of the equation if the bandwidth is just big enough.
+\hspace{1em}Latency is a constant factor, that just adds to the overall delay. (See equation above). Message size and bandwidth correlate to each other in a way that they can be left out of the equation if the bandwidth is just big enough.
 The formula $\frac{messagesize}{bandwith}$ converges to 0 if the bandwidth is just big enough. Also, if there is not enough bandwidth available, the message size should be kept as small as possible to get a good performance.
 
 
