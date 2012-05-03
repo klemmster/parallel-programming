@@ -62,9 +62,9 @@
 \end{figure}
 
 It can easily be seen in [Figure \ref{SampleSetup}], it takes $\sum\limits_{i=0}^m L_i$ where $L$ is the delay between two nodes.
-With the parameters given, $L_i$ can be described as $\alpha_i + \frac{n_i}{\beta_i}$ where $i$ is in range $0 .. P_{i-1}$ .
-Therefore, the final equation is: $\sum\limits_{i=0}^{Pi-1} \alpha_i + \frac{n_i}{\beta_i}$ .
-As L is unchanged this is equal to: $M = (P_{i-1}) * (\alpha + \frac{n}{\beta})$, with M being the message delay.
+With the parameters given, $L_i$ can be described as $\alpha_i + \frac{n_i}{\beta_i}$ where $i$ is in range $0 .. p-1$.
+Therefore, the final equation is: $\sum\limits_{i=0}^{p-1} \alpha_i + \frac{n_i}{\beta_i}$.
+As L is unchanged this is equal to: $M = (p-1) * (\alpha + \frac{n}{\beta})$, with M being the message delay.
 \\\\
 \textbf{(c)\\ 1.}\hspace{1em}\\Another idea to broadcast the messages is to use a binary tree.
 \begin{figure}[!htbp]
@@ -75,12 +75,12 @@ As L is unchanged this is equal to: $M = (P_{i-1}) * (\alpha + \frac{n}{\beta})$
     \label{BinTree}
 \end{figure}
 The binary tree has a number of nice properties, that are interesting for message passing.
-One of which is $P_{n-1}=2^h$, where  $h$ is the depth of the tree and $P_n$ the number of processes.
+One of which is $p-1=2^h$, where  $h$ is the depth of the tree and $p$ the number of processes.
 
 Nodes belonging to the same level can work in parallel, thus the problem can be reduced to a tree as seen in [Figure: \ref{SubBinTree}]
 It can easily be seen, that a node can at most send two messages. Thus $M = 2Lh$.
-$h$ can be acquired by re-arranging the equation given above: $h=\log_2 (P_n-1)$
-Thus, the final equation for estimating $M$ is $M= 2*(\alpha_i + \frac{n_i}{\beta_i}) * \log_2 (P_{n-1})$
+$h$ can be acquired by re-arranging the equation given above: $h=\log_2 (p-1)$
+Thus, the final equation for estimating $M$ is $M= 2*(\alpha_i + \frac{n_i}{\beta_i}) * \log_2 (p-1)$
 
 
 \begin{figure}[!htbp]
@@ -95,7 +95,7 @@ Thus, the final equation for estimating $M$ is $M= 2*(\alpha_i + \frac{n_i}{\bet
 
 Yet another alternative is using a simple star structure.
 $P_0$ sends a message to all the other nodes.
-As broadcast is not allowed the message delay can be calculated in short: $M = (P-1)*L$ or with $L$ substituted: $M = (P-1) * (\alpha_i + \frac{n_i}{\beta_i})$
+As broadcast is not allowed the message delay can be calculated in short: \mbox{$M = (p-1)*L$} or with $L$ substituted: $M = (p-1) * (\alpha_i + \frac{n_i}{\beta_i})$
 \begin{figure}[!htbp]
     \begin{center}
         \includegraphics[scale=1]{3c_3.pdf}
