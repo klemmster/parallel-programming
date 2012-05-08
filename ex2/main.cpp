@@ -22,12 +22,12 @@ int main(int argc, char const *argv[])
 
     for (size_t i = 0; i < N; ++i) {
         for (size_t j = 0; j < M; ++j) {
-            size_t index = i*N + j;
+            size_t index = i*M + j;
             if (a[i] == b[j]) {
                 if (i == 0 || j == 0){
                     L.at(index) = 1;
                 }else{
-                    size_t lowerIndex = (i-1)*N + j-1;
+                    size_t lowerIndex = (i-1)*M + j-1;
                     L.at(index) = L.at(lowerIndex)+1;
                 }
             } else {
@@ -35,12 +35,12 @@ int main(int argc, char const *argv[])
             }
         }
     }
-    /*
+
     for (size_t i = 0; i < N; ++i)
         for (size_t j = 0; j < M; ++j){
-            size_t index = i*N + j;
+            size_t index = i*M + j;
             if (L.at(index) >= K) {
-                size_t upperIndex = (i+1)*N + j+1;
+                size_t upperIndex = (i+1)*M + j+1;
                 if (i+1<N && j+1<M && L.at(upperIndex) > L.at(index))
                     continue;
                 printf("%d %d %d\n", i, j, L.at(index));
@@ -49,12 +49,11 @@ int main(int argc, char const *argv[])
     cout << "######################################################" << "\n";
     for (size_t i = 0; i < N; ++i){
         for (size_t j = 0; j < M; ++j){
-            size_t index = i*N + j;
+            size_t index = i*M + j;
             cout << " " << L.at(index);
         }
         cout << "\n";
     }
-    */
 
     return 0;
 }
