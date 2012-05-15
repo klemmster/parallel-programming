@@ -3,16 +3,15 @@
 #include <iostream>
 #include <stdlib.h>
 
-#include <boost/timer.hpp>
+//#include <boost/timer.hpp>
 
 using namespace std;
 
-int main(int argc, char const *argv[])
-{
-    /* code */
+void computeVariant1(int argc, char const *argv[]) {
+	 /* code */
     if(argc < 4){
         printf("Not enough arguments\n");
-        return 0;
+        return;
     }
 
     string a(argv[1]);
@@ -24,7 +23,7 @@ int main(int argc, char const *argv[])
     vector<vector< unsigned int > > L;
     L.assign(N, vector< unsigned int > (M));
 
-    boost::timer seqTimer;
+//    boost::timer seqTimer;
 
     for (size_t i = 0; i < N; ++i) {
         for (size_t j = 0; j < M; ++j) {
@@ -49,13 +48,97 @@ int main(int argc, char const *argv[])
             }
         }
     cout << "######################################################" << "\n";
-    for (size_t i = 0; i < N; ++i){
-        for (size_t j = 0; j < M; ++j){
-            cout << " " << L[i][j];
-        }
-        cout << "\n";
-    }
+    // for (size_t i = 0; i < N; ++i){
+        // for (size_t j = 0; j < M; ++j){
+            // cout << " " << L[i][j];
+        // }
+        // cout << "\n";
+    // }
 
-    cout << "Elapsed Time: "  << seqTimer.elapsed() << "\n";
+  //  cout << "Elapsed Time: "  << seqTimer.elapsed() << "\n";
+}
+
+struct Match {
+	size_t x, y, k;
+};
+
+void computeVariant2(int argc, char const *argv[]) {
+	string a(argv[1]);
+    string b(argv[2]);
+    size_t K = atoi(argv[3]);
+    size_t rowLength = a.size();
+    size_t colLength = b.size();
+	
+	vector< Match > diagonals;
+	diagonals.reserve(rowLength + colLength - 1);
+	
+	for(size_t rowBegin = 0; rowBegin < rowLength; ++rowBegin) {		
+		unsigned int matchSize = 0;
+		size_t col = 0, row = rowBegin;
+		for(; col < colLength && row < rowLength; ++col, ++row) {
+			if(a[row] == b[col]) {
+				++matchSize;
+			}
+			else if ( matchSize > 0 ) {
+				Match match;
+				match.x = row - 1;
+				match.y = col - 1;
+				match.k = matchSize;
+				
+				diagonals.push_back(match);
+				
+				matchSize = 0;
+			}			
+		}
+		//check if last comparison was true (fetch last match)
+		if ( matchSize > 0 ) {
+				Match match;
+				match.x = row - 1;
+				match.y = col - 1;
+				match.k = matchSize;
+				
+				diagonals.push_back(match);
+		}
+	}
+	
+	for(size_t colBegin = 1; colBegin < colLength; ++colBegin) {
+		unsigned int matchSize = 0;
+		size_t col = colBegin, row = 0;
+		for(; col < colLength && row < rowLength; ++col, ++row) {
+			if(a[row] == b[col]) {
+				++matchSize;
+			}
+			else if ( matchSize > 0 ) {
+				Match match;
+				match.x = row - 1;
+				match.y = col - 1;
+				match.k = matchSize;
+				
+				diagonals.push_back(match);
+				
+				matchSize = 0;
+			}			
+		}
+		//check if last comparison was true (fetch last match)
+		if ( matchSize > 0 ) {
+				Match match;
+				match.x = row - 1;
+				match.y = col - 1;
+				match.k = matchSize;
+				
+				diagonals.push_back(match);
+		}	
+	}
+	
+	for(size_t i = 0; i < diagonals.size(); ++i) {
+		cout << diagonals.at(i).x << " " << diagonals.at(i).y << " " << diagonals.at(i).k << endl;
+	}
+}
+
+int main(int argc, char const *argv[])
+{
+   computeVariant1(argc, argv);
+   cout << "\n\n";
+   computeVariant2(argc, argv);
     return 0;
 }
