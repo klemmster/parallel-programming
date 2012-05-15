@@ -3,6 +3,8 @@
 #include <iostream>
 #include <stdlib.h>
 
+#include <boost/timer.hpp>
+
 using namespace std;
 
 int main(int argc, char const *argv[])
@@ -21,6 +23,8 @@ int main(int argc, char const *argv[])
 
     vector<vector< unsigned int > > L;
     L.assign(N, vector< unsigned int > (M));
+
+    boost::timer seqTimer;
 
     for (size_t i = 0; i < N; ++i) {
         for (size_t j = 0; j < M; ++j) {
@@ -52,5 +56,6 @@ int main(int argc, char const *argv[])
         cout << "\n";
     }
 
+    cout << "Elapsed Time: "  << seqTimer.elapsed() << "\n";
     return 0;
 }
