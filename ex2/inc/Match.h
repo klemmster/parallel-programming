@@ -1,6 +1,10 @@
 #ifndef MATCH_H_Q4UHXBAL
 #define MATCH_H_Q4UHXBAL
 
+#include <vector>
+#include <cstddef>
+#include <ostream>
+
 class Match {
 public:
      Match(const size_t x, const size_t y, const size_t k):
@@ -16,8 +20,7 @@ public:
 private:
 	size_t m_x, m_y, m_k;
 };
-
-
+typedef std::vector< Match > Matches;
 
 #endif /* end of include guard: MATCH_H_Q4UHXBAL */
 
