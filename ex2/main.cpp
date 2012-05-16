@@ -3,6 +3,8 @@
 #include <iostream>
 #include <stdlib.h>
 
+#include "Match.h"
+
 //#include <boost/timer.hpp>
 
 using namespace std;
@@ -56,22 +58,6 @@ void computeVariant1(int argc, char const *argv[]) {
 
   //  cout << "Elapsed Time: "  << seqTimer.elapsed() << "\n";
 }
-
-class Match {
-public:
-     Match(const size_t x, const size_t y, const size_t k):
-        m_x(x),
-        m_y(y),
-        m_k(k){};
-     virtual ~Match(){};
-     friend std::ostream& operator<< (std::ostream& out , const Match& m){
-        out << m.m_x << " " << m.m_y << " " << m.m_k;
-        return out;
-     };
-
-private:
-	size_t m_x, m_y, m_k;
-};
 
 void computeVariant2(int argc, char const *argv[]) {
 	string a(argv[1]);
