@@ -8,7 +8,6 @@
 using namespace std;
 
 void computeVariant1(int argc, char const *argv[]) {
-	 /* code */
     if(argc < 4){
         printf("Not enough arguments\n");
         return;
@@ -58,8 +57,20 @@ void computeVariant1(int argc, char const *argv[]) {
   //  cout << "Elapsed Time: "  << seqTimer.elapsed() << "\n";
 }
 
-struct Match {
-	size_t x, y, k;
+class Match {
+public:
+     Match(const size_t x, const size_t y, const size_t k):
+        m_x(x),
+        m_y(y),
+        m_k(k){};
+     virtual ~Match(){};
+     friend std::ostream& operator<< (std::ostream& out , const Match& m){
+        out << m.m_x << " " << m.m_y << " " << m.m_k;
+        return out;
+     };
+
+private:
+	size_t m_x, m_y, m_k;
 };
 
 void computeVariant2(int argc, char const *argv[]) {
@@ -68,11 +79,11 @@ void computeVariant2(int argc, char const *argv[]) {
     size_t K = atoi(argv[3]);
     size_t rowLength = a.size();
     size_t colLength = b.size();
-	
+
 	vector< Match > diagonals;
 	diagonals.reserve(rowLength + colLength - 1);
-	
-	for(size_t rowBegin = 0; rowBegin < rowLength; ++rowBegin) {		
+
+	for(size_t rowBegin = 0; rowBegin < rowLength; ++rowBegin) {
 		unsigned int matchSize = 0;
 		size_t col = 0, row = rowBegin;
 		for(; col < colLength && row < rowLength; ++col, ++row) {
@@ -80,27 +91,19 @@ void computeVariant2(int argc, char const *argv[]) {
 				++matchSize;
 			}
 			else if ( matchSize > 0 ) {
-				Match match;
-				match.x = row - 1;
-				match.y = col - 1;
-				match.k = matchSize;
-				
+				Match match(row-1, col-1, matchSize);
 				diagonals.push_back(match);
-				
+
 				matchSize = 0;
-			}			
+			}
 		}
 		//check if last comparison was true (fetch last match)
 		if ( matchSize > 0 ) {
-				Match match;
-				match.x = row - 1;
-				match.y = col - 1;
-				match.k = matchSize;
-				
+				Match match(row-1, col-1, matchSize);
 				diagonals.push_back(match);
 		}
 	}
-	
+
 	for(size_t colBegin = 1; colBegin < colLength; ++colBegin) {
 		unsigned int matchSize = 0;
 		size_t col = colBegin, row = 0;
@@ -109,29 +112,21 @@ void computeVariant2(int argc, char const *argv[]) {
 				++matchSize;
 			}
 			else if ( matchSize > 0 ) {
-				Match match;
-				match.x = row - 1;
-				match.y = col - 1;
-				match.k = matchSize;
-				
+				Match match(row-1, col-1, matchSize);
 				diagonals.push_back(match);
-				
+
 				matchSize = 0;
-			}			
+			}
 		}
 		//check if last comparison was true (fetch last match)
 		if ( matchSize > 0 ) {
-				Match match;
-				match.x = row - 1;
-				match.y = col - 1;
-				match.k = matchSize;
-				
+				Match match(row-1, col-1, matchSize);
 				diagonals.push_back(match);
-		}	
+		}
 	}
-	
+
 	for(size_t i = 0; i < diagonals.size(); ++i) {
-		cout << diagonals.at(i).x << " " << diagonals.at(i).y << " " << diagonals.at(i).k << endl;
+		cout << diagonals.at(i) << "\n";
 	}
 }
 
