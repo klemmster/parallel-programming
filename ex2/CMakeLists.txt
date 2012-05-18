@@ -1,6 +1,19 @@
 cmake_minimum_required (VERSION 2.6)
+
+# force gcc on apple to ensure openMP support
+# can't use IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin") since this is only 
+# available after calling project() and CMAKE_CXX_COMPULER have to be set 
+# befor calling project()
+
+
+IF(APPLE)
+	MESSAGE(STATUS "switch compiler to gcc-4.7")
+	SET( CMAKE_CXX_COMPILER "gcc-mp-4.7" )
+ENDIF(APPLE)
+
 project (Parallel_Ex2)
 
+MESSAGE(STATUS "linker: ${CMAKE_LINKER}")
 
 find_package(Boost COMPONENTS timer system chrono filesystem REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
