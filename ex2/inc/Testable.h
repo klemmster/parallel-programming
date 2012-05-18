@@ -8,10 +8,17 @@
 class Testable
 {
 public:
-    Testable () {};
+    Testable (const std::string name):
+        m_name(name){};
     virtual ~Testable () {};
     virtual void run(const std::string& A, const std::string& B, const size_t k) = 0;
     virtual Matches collect() = 0;
+
+    const std::string& getName() const { return m_name; };
+
+protected:
+
+    const std::string m_name;
 
 };
 

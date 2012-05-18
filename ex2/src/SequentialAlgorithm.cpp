@@ -1,6 +1,7 @@
 #include "SequentialAlgorithm.h"
 
-SequentialAlgorithm::SequentialAlgorithm(){
+SequentialAlgorithm::SequentialAlgorithm(const std::string name):
+    Testable(name){
 
 }
 

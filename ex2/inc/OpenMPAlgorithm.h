@@ -7,7 +7,8 @@
 class OpenMPAlgorithm: virtual public Testable
 {
 public:
-    OpenMPAlgorithm () {};
+    OpenMPAlgorithm (const std::string name):
+        Testable(name){};
     virtual ~OpenMPAlgorithm () {};
     virtual void run(const std::string& A, const std::string& B, const size_t k);
     virtual Matches collect();

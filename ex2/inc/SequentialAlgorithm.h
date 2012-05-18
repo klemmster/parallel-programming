@@ -8,7 +8,7 @@
 class SequentialAlgorithm: virtual public Testable
 {
 public:
-    SequentialAlgorithm ();
+    SequentialAlgorithm (const std::string name);
     virtual ~SequentialAlgorithm () {};
     virtual void run(const std::string& A, const std::string& B, const size_t k);
     virtual Matches collect();

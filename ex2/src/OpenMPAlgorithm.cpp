@@ -1,4 +1,5 @@
 #include "OpenMPAlgorithm.h"
+#include <omp.h>
 
 void OpenMPAlgorithm::run(const std::string& A, const std::string& B, const size_t k){
     size_t rowLength = A.size();
@@ -6,6 +7,7 @@ void OpenMPAlgorithm::run(const std::string& A, const std::string& B, const size
 
 	matches.reserve(rowLength + colLength - 1);
 
+    //#pragma omp parallel
 	for(size_t rowBegin = 0; rowBegin < rowLength; ++rowBegin) {
 		unsigned int matchSize = 0;
 		size_t col = 0, row = rowBegin;

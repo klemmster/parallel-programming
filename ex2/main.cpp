@@ -6,8 +6,6 @@
 #include "SequentialAlgorithm.h"
 #include "OpenMPAlgorithm.h"
 
-//#include <boost/timer.hpp>
-
 using namespace std;
 
 int main(int argc, char const *argv[])
@@ -26,8 +24,8 @@ int main(int argc, char const *argv[])
    File fa(a);
    File fb(b);
 
-   SequentialAlgorithm* seq = new SequentialAlgorithm();
-   OpenMPAlgorithm* omp = new OpenMPAlgorithm();
+   SequentialAlgorithm* seq = new SequentialAlgorithm("Sequential");
+   OpenMPAlgorithm* omp = new OpenMPAlgorithm("OpenMP");
 
    Testables testables;
    testables.push_back(seq);
