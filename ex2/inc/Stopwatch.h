@@ -9,12 +9,16 @@ using namespace boost::chrono;
 class Stopwatch
 {
 public:
-    Stopwatch (const std::string id):
+    Stopwatch (const std::string id, const long long work):
         start(high_resolution_clock::now()),
-        id(id){};
-    virtual ~Stopwatch () { std::cout << id << " took: " <<
+        id(id),
+        work(work){};
+    virtual ~Stopwatch () {
+        duration<double> sec = end-start;
+        cout.precision(5);
+        std::cout << id << " took: " <<
         boost::lexical_cast<string>( duration_cast<milliseconds>(end - start).count())
-        << "ms\n";  };
+                  << "ms ("<< work/(sec.count()*1000000) << " MWpS)\n" ;};
 
     void stop() { end = high_resolution_clock::now(); };
 
@@ -22,6 +26,7 @@ private:
     const time_point<high_resolution_clock> start;
     time_point<high_resolution_clock> end;
     const std::string id;
+    const long long work;
 };
 
 #endif /* end of include guard: STOPWATCH_H_XU6R2ZE0 */
