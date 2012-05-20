@@ -28,6 +28,11 @@ else()
     MESSAGE(STATUS "No OpenMP, wait forever")
 endif()
 
+# link standard c++ library on osx systems
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -lstdc++")
+endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+
 include_directories(${CMAKE_SOURCE_DIR}/inc)
 
 IF(UNIX AND NOT WIN32)
