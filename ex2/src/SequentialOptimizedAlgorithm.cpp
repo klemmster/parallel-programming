@@ -1,14 +1,11 @@
-#pragma GCC push_options
-#pragma GCC optimize ("O0")
+#include "SequentialOptimizedAlgorithm.h"
 
-#include "SequentialAlgorithm.h"
-
-SequentialAlgorithm::SequentialAlgorithm(const std::string name):
+SequentialOptimizedAlgorithm::SequentialOptimizedAlgorithm(const std::string name):
     Testable(name){
 
 }
 
-void SequentialAlgorithm::run(const std::string& A, const std::string& B, const size_t k){
+void SequentialOptimizedAlgorithm::run(const std::string& A, const std::string& B, const size_t k){
     rows = A.size();
     cols = B.size();
     this->k = k;
@@ -29,7 +26,7 @@ void SequentialAlgorithm::run(const std::string& A, const std::string& B, const 
     }
 }
 
-Matches SequentialAlgorithm::collect(){
+Matches SequentialOptimizedAlgorithm::collect(){
     Matches matches;
     for (size_t i = 0; i < rows; ++i)
         for (size_t j = 0; j < cols; ++j){
@@ -41,5 +38,3 @@ Matches SequentialAlgorithm::collect(){
         }
     return matches;
 }
-
-#pragma GCC pop_options
