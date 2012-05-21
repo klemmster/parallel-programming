@@ -6,11 +6,19 @@ OpenMPAlgorithm::OpenMPAlgorithm(const std::string name):
     Testable(name)
 {
     results = std::vector< Matches >(omp_get_max_threads()*2);
+    results.at(0).reserve(450000);
+    results.at(4).reserve(450000);
 }
 
 void OpenMPAlgorithm::run(const std::string& A, const std::string& B, const size_t k){
     const size_t rowLength = A.size();
     const size_t colLength = B.size();
+
+    /*
+    printf("Row %lu\n", rowLength);
+    printf("Col %lu\n", colLength);
+    printf("ColxRow %lu\n", colLength*rowLength);
+    */
 
     #pragma omp parallel sections
     {
@@ -71,6 +79,11 @@ void OpenMPAlgorithm::run(const std::string& A, const std::string& B, const size
             }
         }
     }
+    /*
+    for(int i=0;  i<results.size(); ++i){
+        printf("Size: %d\n", results.at(i).size());
+    }
+    */
 }
 
 Matches OpenMPAlgorithm::collect(){
