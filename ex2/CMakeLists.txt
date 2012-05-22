@@ -1,8 +1,8 @@
 cmake_minimum_required (VERSION 2.6)
 
 # force gcc on apple to ensure openMP support
-# can't use IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin") since this is only 
-# available after calling project() and CMAKE_CXX_COMPULER have to be set 
+# can't use IF(${CMAKE_SYSTEM_NAME} MATCHES "Darwin") since this is only
+# available after calling project() and CMAKE_CXX_COMPULER have to be set
 # befor calling project()
 
 
@@ -40,5 +40,5 @@ IF(UNIX AND NOT WIN32)
 ENDIF(UNIX AND NOT WIN32)
 
 add_executable(ex2 main.cpp inc/Testable.h src/File.cpp src/TestRunner.cpp src/SequentialAlgorithm.cpp src/SequentialOptimizedAlgorithm.cpp
-    src/OpenMPAlgorithm.cpp)
+    src/OpenMPAlgorithm.cpp src/OpenMPAlgorithmTasks.cpp)
 target_link_libraries(ex2 ${Boost_LIBRARIES})

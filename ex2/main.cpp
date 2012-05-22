@@ -6,6 +6,7 @@
 #include "SequentialAlgorithm.h"
 #include "SequentialOptimizedAlgorithm.h"
 #include "OpenMPAlgorithm.h"
+#include "OpenMPAlgorithmTasks.h"
 
 using namespace std;
 
@@ -27,11 +28,13 @@ int main(int argc, char const *argv[])
 
    SequentialAlgorithm* seq = new SequentialAlgorithm("Sequential");
    OpenMPAlgorithm* omp = new OpenMPAlgorithm("OpenMP");
+   OpenMPAlgorithmTasks* ompTasks = new OpenMPAlgorithmTasks("OpenMP-Tasks");
    SequentialOptimizedAlgorithm* seqOpt = new SequentialOptimizedAlgorithm("Optimized Sequential");
 
    Testables testables;
    testables.push_back(seq);
    testables.push_back(omp);
+   testables.push_back(ompTasks);
    testables.push_back(seqOpt);
 
    TestRunner testRunner(testables, fa.getContent(), fb.getContent(), k);
