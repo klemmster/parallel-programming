@@ -15,6 +15,7 @@ public:
 
 private:
     std::vector< Matches > results;
+    size_t m_k;
 };
 
 #endif /* end of include guard: OPENMPALGORITHM_H_W8N1AXO6 */

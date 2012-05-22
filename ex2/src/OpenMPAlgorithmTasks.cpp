@@ -17,6 +17,7 @@ void OpenMPAlgorithmTasks::run(const std::string& A, const std::string& B, const
     const size_t rowLength = A.size();
     const size_t colLength = B.size();
 
+    m_k = k;
     /*
     printf("Row %lu\n", rowLength);
     printf("Col %lu\n", colLength);
@@ -36,7 +37,7 @@ void OpenMPAlgorithmTasks::run(const std::string& A, const std::string& B, const
         startIndices.push_back(indexPair);
     }
 
-    
+
 	#pragma omp parallel
 	{
 		size_t i=0;
@@ -45,7 +46,7 @@ void OpenMPAlgorithmTasks::run(const std::string& A, const std::string& B, const
 			for(i=0; i<startIndices.size(); ++i)
 			#pragma omp task shared(A, B, startIndices)
 			{
-				printf("Thread %d starting task for i=%d\n", omp_get_thread_num(), i);
+				//printf("Thread %d starting task for i=%d\n", omp_get_thread_num(), i);
 				size_t matchSize = 0;
 				size_t row = startIndices.at(i).first;
 				size_t col = startIndices.at(i).second;
@@ -75,8 +76,13 @@ void OpenMPAlgorithmTasks::run(const std::string& A, const std::string& B, const
 Matches OpenMPAlgorithmTasks::collect(){
     Matches collected;
     std::vector< Matches >::iterator it;
+    Matches::iterator it2;
     for(it=results.begin(); it!=results.end(); ++it){
-        collected.insert(collected.end(), (*it).begin(), (*it).end());
+        for(it2=(*it).begin(); it2!=(*it).end(); ++it2){
+            if((*it2).getK() >= m_k){
+                collected.push_back((*it2));
+            }
+        }
     }
     return collected;
 }

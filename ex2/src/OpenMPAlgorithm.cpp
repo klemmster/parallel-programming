@@ -23,6 +23,7 @@ void OpenMPAlgorithm::run(const std::string& A, const std::string& B, const size
     */
 
 
+    m_k = k;
     std::vector< std::pair<size_t, size_t> > startIndices;
 
     for(size_t rowBegin=0; rowBegin < rowLength; ++rowBegin) {
@@ -63,8 +64,14 @@ void OpenMPAlgorithm::run(const std::string& A, const std::string& B, const size
 Matches OpenMPAlgorithm::collect(){
     Matches collected;
     std::vector< Matches >::iterator it;
+    Matches::iterator it2;
     for(it=results.begin(); it!=results.end(); ++it){
-        collected.insert(collected.end(), (*it).begin(), (*it).end());
+        for(it2=(*it).begin(); it2!=(*it).end(); ++it2){
+            if((*it2).getK() >= m_k){
+                collected.push_back((*it2));
+            }
+        }
     }
     return collected;
 }
+

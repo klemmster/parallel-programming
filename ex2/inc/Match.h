@@ -44,6 +44,10 @@ public:
          return false;
      };
 
+     const size_t getK() const{
+         return m_k;
+     }
+
 private:
 	size_t m_x, m_y, m_k;
 };
