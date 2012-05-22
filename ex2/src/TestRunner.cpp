@@ -29,6 +29,13 @@ TestRunner::TestRunner(Testables testables, const string& A, const string& B,
             if(matches.size() == lastMatches.size()){
                 bool isEqual = std::equal(matches.begin(), matches.end(), lastMatches.begin());
                 if(!isEqual){
+                    for(matchIT = matches.begin(); matchIT!=matches.end(); ++matchIT){
+                        std::cout << (*matchIT) << "\n";
+                    }
+                    std::cout << "##############################################\n";
+                    for(matchIT = lastMatches.begin(); matchIT!=lastMatches.end(); ++matchIT){
+                        std::cout << (*matchIT) << "\n";
+                    }
                     std::cout << "Test FAILed, Not equal\n";
                     return;
                 }
