@@ -6,11 +6,11 @@
 OpenMPAlgorithmTasks::OpenMPAlgorithmTasks(const std::string name):
     Testable(name)
 {
-    results = std::vector< Matches >(omp_get_max_threads());
-    results.at(0).reserve(310000);
-    results.at(1).reserve(310000);
-    results.at(2).reserve(310000);
-    results.at(3).reserve(310000);
+    int maxThreads = omp_get_max_threads();
+    results = std::vector< Matches >(maxThreads);
+    for( int i = 0; i < maxThreads; ++i){
+        results.at(i).reserve(310000);
+    }
 }
 
 void OpenMPAlgorithmTasks::run(const std::string& A, const std::string& B, const size_t k){
