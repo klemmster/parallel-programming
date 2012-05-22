@@ -6,8 +6,8 @@ OpenMPAlgorithm::OpenMPAlgorithm(const std::string name):
     Testable(name)
 {
     results = std::vector< Matches >(omp_get_max_threads()*2);
-    results.at(0).reserve(450000);
-    results.at(4).reserve(450000);
+    results.at(0).reserve(4500000);
+    results.at(4).reserve(4500000);
 }
 
 void OpenMPAlgorithm::run(const std::string& A, const std::string& B, const size_t k){
@@ -88,11 +88,9 @@ void OpenMPAlgorithm::run(const std::string& A, const std::string& B, const size
 
 Matches OpenMPAlgorithm::collect(){
     Matches collected;
-    /*
     std::vector< Matches >::iterator it;
     for(it=results.begin(); it!=results.end(); ++it){
         collected.insert(collected.end(), (*it).begin(), (*it).end());
     }
-    */
     return collected;
 }

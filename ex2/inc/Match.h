@@ -12,9 +12,36 @@ public:
         m_y(y),
         m_k(k){};
      virtual ~Match(){};
+
+     static bool sortFun(const Match& a, const Match& b){
+        if(a.m_x < b.m_x){
+            return true;
+        }else if(a.m_x > b.m_x){
+            return false;
+        }else if(a.m_y < b.m_y){
+            return true;
+        }else if(a.m_y > b.m_y){
+            return false;
+        }else if(a.m_k < b.m_k){
+            return true;
+        }else if(a.m_k > b.m_k){
+            return false;
+        }
+        return false;
+
+     };
      friend std::ostream& operator<< (std::ostream& out , const Match& m){
         out << m.m_x << " " << m.m_y << " " << m.m_k;
         return out;
+     };
+
+     bool operator== (const Match& rhs){
+         if( (m_x == rhs.m_x) &&
+             (m_y == rhs.m_y) &&
+             (m_k == rhs.m_k)){
+            return true;
+         }
+         return false;
      };
 
 private:

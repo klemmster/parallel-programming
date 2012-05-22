@@ -19,15 +19,28 @@ TestRunner::TestRunner(Testables testables, const string& A, const string& B,
         stopwatch.stop();
     }
 
-    /*
     Matches::iterator matchIT;
+    Matches lastMatches;
+    bool firstRun = true;
     for(it = testables.begin(); it!=testables.end(); ++it){
         Matches matches = (*it)->collect();
-        for(matchIT = matches.begin(); matchIT!=matches.end(); ++matchIT){
-            std::cout << (*matchIT) << "\n";
+        std::sort(matches.begin(), matches.end(), Match::sortFun);
+        if(!firstRun){
+            if(matches.size() == lastMatches.size()){
+                bool isEqual = std::equal(matches.begin(), matches.end(), lastMatches.begin());
+                if(!isEqual){
+                    std::cout << "Test FAILed, Not equal\n";
+                    return;
+                }
+            }else{
+                std::cout << "Test FAILED, different size\n";
+                return;
+            }
+
         }
-        std::cout << "DONE " << (*it)->getName() << "\n";
+        lastMatches = matches;
+        firstRun = false;
     }
-    */
+    std::cout << "Success!\n";
 
 }
