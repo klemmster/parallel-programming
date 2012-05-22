@@ -44,7 +44,9 @@ int main(int argc, char const *argv[])
 
    delete seq;
    delete omp;
+   delete ompTasks;
    delete seqOpt;
+   delete seqOpt2;
 
    return EXIT_SUCCESS;
 }
