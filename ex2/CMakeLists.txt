@@ -47,5 +47,5 @@ ENDIF(WIN32)
 file (GLOB_RECURSE headers *.h)
 
 add_executable(ex2 main.cpp inc/Testable.h src/File.cpp src/TestRunner.cpp src/SequentialAlgorithm.cpp src/SequentialOptimizedAlgorithm.cpp
-    src/OpenMPAlgorithm.cpp src/OpenMPAlgorithmTasks.cpp ${headers})
+    src/OpenMPAlgorithm.cpp src/OpenMPAlgorithmTasks.cpp src/SequentialOptimizedAlgorithm2.cpp ${headers})
 target_link_libraries(ex2 ${Boost_LIBRARIES})

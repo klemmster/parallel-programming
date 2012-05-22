@@ -5,6 +5,7 @@
 #include "TestRunner.h"
 #include "SequentialAlgorithm.h"
 #include "SequentialOptimizedAlgorithm.h"
+#include "SequentialOptimizedAlgorithm2.h"
 #include "OpenMPAlgorithm.h"
 #include "OpenMPAlgorithmTasks.h"
 
@@ -30,12 +31,14 @@ int main(int argc, char const *argv[])
    OpenMPAlgorithm* omp = new OpenMPAlgorithm("OpenMP");
    OpenMPAlgorithmTasks* ompTasks = new OpenMPAlgorithmTasks("OpenMP-Tasks");
    SequentialOptimizedAlgorithm* seqOpt = new SequentialOptimizedAlgorithm("Optimized Sequential");
+   SequentialOptimizedAlgorithm2* seqOpt2 = new SequentialOptimizedAlgorithm2("Optimized Sequential part two");
 
    Testables testables;
    testables.push_back(seq);
    testables.push_back(omp);
    testables.push_back(ompTasks);
    testables.push_back(seqOpt);
+   testables.push_back(seqOpt2);
 
    TestRunner testRunner(testables, fa.getContent(), fb.getContent(), k);
 
