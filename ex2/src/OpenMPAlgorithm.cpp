@@ -5,9 +5,11 @@
 OpenMPAlgorithm::OpenMPAlgorithm(const std::string name):
     Testable(name)
 {
-    results = std::vector< Matches >(omp_get_max_threads()*2);
-    results.at(0).reserve(4500000);
-    results.at(4).reserve(4500000);
+    results = std::vector< Matches >(omp_get_max_threads());
+    results.at(0).reserve(310000);
+    results.at(1).reserve(310000);
+    results.at(2).reserve(310000);
+    results.at(3).reserve(310000);
 }
 
 void OpenMPAlgorithm::run(const std::string& A, const std::string& B, const size_t k){
@@ -20,70 +22,42 @@ void OpenMPAlgorithm::run(const std::string& A, const std::string& B, const size
     printf("ColxRow %lu\n", colLength*rowLength);
     */
 
-    #pragma omp parallel sections
+
+    std::vector< std::pair<size_t, size_t> > startIndices;
+
+    for(size_t rowBegin=0; rowBegin < rowLength; ++rowBegin) {
+        std::pair<size_t, size_t> indexPair(rowBegin, 0);
+        startIndices.push_back(indexPair);
+    }
+
+    for(size_t colBegin=1; colBegin < colLength; ++colBegin){
+        std::pair<size_t, size_t > indexPair(0, colBegin);
+        startIndices.push_back(indexPair);
+    }
+
+    #pragma omp parallel for
+    for(size_t i=0; i<startIndices.size(); ++i)
+    //#pragma omp task for default(none) shared(A, B)
     {
-        #pragma omp section
-        {
-            size_t col, row, matchSize;
-            size_t rowBegin = 0;
-            #pragma omp parallel for default(none) lastprivate(rowBegin) private( matchSize, col, row) shared(A, B)
-            for(rowBegin=0; rowBegin < rowLength; ++rowBegin) {
-
+        size_t matchSize = 0;
+        size_t row = startIndices.at(i).first;
+        size_t col = startIndices.at(i).second;
+        for(; col < colLength && row < rowLength; ++col, ++row) {
+            if(A[row] == B[col]) {
+                ++matchSize;
+            }
+            else if ( matchSize > 0 ) {
+                Match match(row-1, col-1, matchSize);
+                results[omp_get_thread_num()].push_back(match);
                 matchSize = 0;
-                col = 0;
-                row = rowBegin;
-                for(; col < colLength && row < rowLength; ++col, ++row) {
-                    if(A[row] == B[col]) {
-                        ++matchSize;
-
-                    }
-                    else if ( matchSize > 0 ) {
-                        Match match(row-1, col-1, matchSize);
-                        results[omp_get_thread_num()].push_back(match);
-                        matchSize = 0;
-                    }
-                }
-                //check if last comparison was true (fetch last match)
-                if ( matchSize > 0 ) {
-                        Match match(row-1, col-1, matchSize);
-                        results[omp_get_thread_num()].push_back(match);
-                }
             }
         }
-
-        #pragma omp section
-        {
-            size_t col, row, matchSize;
-            size_t colBegin = 1;
-            #pragma omp parallel for default(none) lastprivate(colBegin) private(matchSize, col, row) shared(A, B)
-            for(colBegin = 1; colBegin < colLength; ++colBegin) {
-
-                matchSize = 0;
-                col = colBegin,
-                row = 0;
-                for(; col < colLength && row < rowLength; ++col, ++row) {
-                    if(A[row] == B[col]) {
-                        ++matchSize;
-                    }
-                    else if ( matchSize > 0 ) {
-                        Match match(row-1, col-1, matchSize);
-                        results[omp_get_thread_num()+omp_get_max_threads()].push_back(match);
-                        matchSize = 0;
-                    }
-                }
-                //check if last comparison was true (fetch last match)
-                if ( matchSize > 0 ) {
-                        Match match(row-1, col-1, matchSize);
-                        results[omp_get_thread_num()+omp_get_max_threads()].push_back(match);
-                }
-            }
+        //check if last comparison was true (fetch last match)
+        if ( matchSize > 0 ) {
+                Match match(row-1, col-1, matchSize);
+                results[omp_get_thread_num()].push_back(match);
         }
     }
-    /*
-    for(int i=0;  i<results.size(); ++i){
-        printf("Size: %d\n", results.at(i).size());
-    }
-    */
 }
 
 Matches OpenMPAlgorithm::collect(){
