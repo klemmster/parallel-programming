@@ -41,6 +41,7 @@ ENDIF(UNIX AND NOT WIN32)
 
 IF(WIN32)
 	set(CMAKE_CXX_COMPILER "g++")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3")
 ENDIF(WIN32)
 
 add_executable(ex2 main.cpp inc/Testable.h src/File.cpp src/TestRunner.cpp src/SequentialAlgorithm.cpp src/SequentialOptimizedAlgorithm.cpp

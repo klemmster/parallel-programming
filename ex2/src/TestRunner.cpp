@@ -36,11 +36,18 @@ TestRunner::TestRunner(Testables testables, const string& A, const string& B,
                     for(matchIT = lastMatches.begin(); matchIT!=lastMatches.end(); ++matchIT){
                         std::cout << (*matchIT) << "\n";
                     }
-                    std::cout << "Test FAILed, Not equal\n";
+                    std::cout << (*it)->getName() << ": Test FAILed, Not equal\n";
                     return;
                 }
             }else{
-                std::cout << "Test FAILED, different size\n";
+				for(matchIT = matches.begin(); matchIT!=matches.end(); ++matchIT){
+                        std::cout << (*matchIT) << "\n";
+				}
+				std::cout << "##############################################\n";
+				for(matchIT = lastMatches.begin(); matchIT!=lastMatches.end(); ++matchIT){
+					std::cout << (*matchIT) << "\n";
+				}
+                std::cout << (*it)->getName() << ": Test FAILED, different size\n";
                 return;
             }
 
