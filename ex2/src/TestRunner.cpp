@@ -1,8 +1,9 @@
 #include "TestRunner.h"
 #include "Match.h"
 #include <iostream>
+#include <algorithm>
 #include <boost/lexical_cast.hpp>
-#include "Stopwatch.h"
+//#include "Stopwatch.h"
 #include "StopwatchNoBoost.h"
 
 TestRunner::TestRunner(Testables testables, const string& A, const string& B,

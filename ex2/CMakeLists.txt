@@ -15,7 +15,7 @@ project (Parallel_Ex2)
 
 MESSAGE(STATUS "linker: ${CMAKE_LINKER}")
 
-find_package(Boost COMPONENTS timer system chrono filesystem REQUIRED)
+find_package(Boost COMPONENTS system filesystem REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories ( ${Boost_LIBRARY_DIRS} )
 
