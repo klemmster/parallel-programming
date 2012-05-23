@@ -27,6 +27,7 @@ int main(int argc, char const *argv[])
    File fa(a);
    File fb(b);
 
+   //Testrunner deletes objects
    SequentialAlgorithm* seq = new SequentialAlgorithm("Sequential");
    OpenMPAlgorithm* omp = new OpenMPAlgorithm("OpenMP");
    OpenMPAlgorithmTasks* ompTasks = new OpenMPAlgorithmTasks("OpenMP-Tasks");
@@ -41,12 +42,6 @@ int main(int argc, char const *argv[])
    testables.push_back(seqOpt2);
 
    TestRunner testRunner(testables, fa.getContent(), fb.getContent(), k);
-
-   delete seq;
-   delete omp;
-   delete ompTasks;
-   delete seqOpt;
-   delete seqOpt2;
 
    return EXIT_SUCCESS;
 }

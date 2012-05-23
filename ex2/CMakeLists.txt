@@ -19,6 +19,8 @@ find_package(Boost COMPONENTS system filesystem REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 link_directories ( ${Boost_LIBRARY_DIRS} )
 
+find_package(OpenSSL)
+
 include(FindOpenMP)
 if(OPENMP_FOUND)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
@@ -48,4 +50,4 @@ file (GLOB_RECURSE headers *.h)
 
 add_executable(ex2 main.cpp inc/Testable.h src/File.cpp src/TestRunner.cpp src/SequentialAlgorithm.cpp src/SequentialOptimizedAlgorithm.cpp
     src/OpenMPAlgorithm.cpp src/OpenMPAlgorithmTasks.cpp src/SequentialOptimizedAlgorithm2.cpp ${headers})
-target_link_libraries(ex2 ${Boost_LIBRARIES})
+target_link_libraries(ex2 ${OPENSSL_LIBRARIES} ${Boost_LIBRARIES})

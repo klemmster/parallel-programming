@@ -4,6 +4,8 @@
 #include <vector>
 #include <cstddef>
 #include <ostream>
+#include <sstream>
+#include <string>
 
 class Match {
 public:
@@ -46,7 +48,14 @@ public:
 
      const size_t getK() const{
          return m_k;
-     }
+     };
+
+     std::string toString() const {
+     	
+	std::ostringstream out;
+	out << m_x << m_y << m_k << "\n";
+	return out.str();
+     };
 
 private:
 	size_t m_x, m_y, m_k;
