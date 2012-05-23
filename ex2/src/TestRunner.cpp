@@ -3,6 +3,7 @@
 #include <iostream>
 #include <boost/lexical_cast.hpp>
 #include "Stopwatch.h"
+#include "StopwatchNoBoost.h"
 
 TestRunner::TestRunner(Testables testables, const string& A, const string& B,
         const size_t k):
@@ -14,7 +15,7 @@ TestRunner::TestRunner(Testables testables, const string& A, const string& B,
     Testables::iterator it;
 
     for(it=testables.begin(); it!=testables.end(); ++it){
-        Stopwatch stopwatch((*it)->getName(), B.size() * A.size());
+        StopwatchNoBoost stopwatch((*it)->getName(), B.size() * A.size());
         (*it)->run(A, B, k);
         stopwatch.stop();
     }
