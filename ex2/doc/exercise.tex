@@ -52,8 +52,28 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Exercise 1 - Sequential Overspecification}
+Input of the algorithm are two strings (a, b) and a minimum matching length (K). The algorithm compares sequence \textit{a} to sequence \textit{b} and provides all matching substrings with at least K characters.
+
+The first part of the algorithm (first nested for loops) fills the cells of the matrix L. Important are the diagonals that represent a specific starting points in the sequences. Every cell (i, j) of the matrix now indicates if the characters a[i] and b[j] match and how long the matching substring towards that point is. The diagonal on the bottom left with values from 1 to 4 shows the matching substring "`Welt"` that is part of both sequences. The same stands for the diagonal on the top right going from 1 to 5 with the substring "`Hallo"'.
+
+The second part now selects the matching substrings that have at least K characters and prints the indices of the sequences and the matching length.
 
 
+The example inputs a="'HalloWelt"' and b="'WeltHallo"' yield the following matrix 
+
+$$L=
+\begin{pmatrix}
+	0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & \\
+	0 & 0 & 0 & 0 & 0 & 2 & 0 & 0 & 0 & \\
+	0 & 0 & 1 & 0 & 0 & 0 & 3 & 1 & 0 & \\
+	0 & 0 & 1 & 0 & 0 & 0 & 1 & 4 & 0 & \\
+	0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 5 & \\
+	1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \\
+	0 & 2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \\
+	0 & 0 & 3 & 0 & 0 & 0 & 1 & 1 & 0 & \\
+	0 & 0 & 0 & 4 & 0 & 0 & 0 & 0 & 0 &
+\end{pmatrix}
+$$
 
 \section{Exercise 2 - Parallel Algorithm Design}
 \textbf{(a) Foster's design methodology}
