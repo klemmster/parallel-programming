@@ -4,8 +4,6 @@
 #include <sys/time.h>
 #include <iostream>
 
-using namespace boost::chrono;
-
 class StopwatchNoBoost
 {
 public:
