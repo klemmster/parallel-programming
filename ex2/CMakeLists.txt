@@ -36,7 +36,7 @@ endif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 include_directories(${CMAKE_SOURCE_DIR}/inc)
 
 IF(UNIX AND NOT WIN32)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -O3")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native -Wall -O3")
 ENDIF(UNIX AND NOT WIN32)
 
 IF(WIN32)
