@@ -54,7 +54,7 @@
 \section{Exercise 1 - Sequential Overspecification}
 Input of the algorithm are two strings (a, b) and a minimum matching length (K). The algorithm compares sequence \textit{a} to sequence \textit{b} and provides all matching substrings with at least K characters.
 
-The first part of the algorithm (first nested for loops) fills the cells of the matrix L. Important are the diagonals that represent a specific starting points in the sequences. Every cell (i, j) of the matrix now indicates if the characters a[i] and b[j] match and how long the matching substring towards that point is. The diagonal on the bottom left with values from 1 to 4 shows the matching substring "`Welt"` that is part of both sequences. The same stands for the diagonal on the top right going from 1 to 5 with the substring "`Hallo"'.
+The first part of the algorithm (first nested for loops) fills the cells of the matrix L. Important are the diagonals that represent a specific starting points in the sequences. Every cell (i, j) of the matrix now indicates if the characters a[i] and b[j] match and how long the matching substring towards that point is. The diagonal on the bottom left (see example matrix) with values from 1 to 4 shows the matching substring "`Welt"` that is part of both sequences. The same stands for the diagonal on the top right (see example matrix) going from 1 to 5 with the substring "`Hallo"'.
 
 The second part now selects the matching substrings that have at least K characters and prints the indices of the sequences and the matching length.
 
@@ -78,10 +78,40 @@ $$
 \section{Exercise 2 - Parallel Algorithm Design}
 \textbf{(a) Foster's design methodology}
 
+Foster's Methodology:
+\begin{enumerate}
+	\item Partitioning
+	\item Communication
+	\item Agglomeration
+	\item Mapping
+\end{enumerate}
+
+\textbf{Partitioning}
+
+domain decomposition, functional decomposition; good: minimize redundant computations and redundant data storage, primitive tasks are the same size, number of tasks increase with problem size
+
+\textbf{Communication}
+
+local communication, global communication; good: comm. is balanced among tasks, tasks can communicate concurrently, tasks can perform computations concurrently
+
+\textbf{Agglomeration}
+
+-
+
+\textbf{Mapping}
+
+-
+
 \textbf{(b) OpenMP}
+
+See source of classes OpenMPAlgorithm and OpenMPAlgorithmTasks.
 
 \textbf{(c) Optimization}
 
+See source of classes SequentialOptimizedAlgorithm and SequentialOptimizedAlgorithm2.
+
 \section{Exercise 3 - Benchmarking}
+
+Results here...
 
 \end{document}
