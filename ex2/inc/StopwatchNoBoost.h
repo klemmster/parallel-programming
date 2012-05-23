@@ -14,7 +14,8 @@ public:
 			gettimeofday(&start, 0);
 		};
     virtual ~StopwatchNoBoost () {
-        float millis = (end.tv_usec-start.tv_usec)/1000.0;
+   	float seconds =(end.tv_sec - start.tv_sec);
+        float millis = (seconds*1000) + ((end.tv_usec-start.tv_usec)/1000.0);
         cout.precision(5);
         std::cout << id << " took: " << millis
                   << "ms ("<< work/(millis*1000.0) << " MWpS)\n" ;};
