@@ -75,8 +75,11 @@ $$L=
 \end{pmatrix}
 $$
 
+\newpage
 \section{Exercise 2 - Parallel Algorithm Design}
 \textbf{(a) Foster's design methodology}
+
+Foster's Methodology consist of four steps. Following the characteristics of our OpenMP algorithm concerning these steps are described.
 
 Foster's Methodology:
 \begin{enumerate}
@@ -86,7 +89,7 @@ Foster's Methodology:
 	\item Mapping
 \end{enumerate}
 
-\textbf{Partitioning}
+\textsc{1. Partitioning}
 
 To partition the given problem the diagonals of the matrix can be used. The computations on these are independet of each other. So it is possible to assign one diagonal to one task. 
 
@@ -96,17 +99,17 @@ Disadvantages are that the different tasks do not have the same size and many ta
 
 
 
-\textbf{Communication}
+\textsc{2. Communication}
 
 As stated in the section before computations on the diagonals are independent of each other. Therefore there is no communication needed between the task. At the end of computations the results of the tasks have to be collected.
 
-\textbf{Agglomeration}
+\textsc{3. Agglomeration}
 
 It is possible to agglomerate tasks into one task by combining several diagonals. To increase locality the combined diagonals should be adjacent.
 
-\textbf{Mapping}
+\textsc{4. Mapping}
 
-
+The mapping of the tasks to processors/threads is done by the operating system or by the OpenMP library.
 
 \textbf{(b) OpenMP}
 
