@@ -132,11 +132,28 @@ As compiler optimization settings, the \textit{-O3}flag as well as the \textit{-
 \end{figure}
 
 As a result of task twom four different versions of the implementation were created. 
-Figure[\ref{fig:seq_comp}] shows the average speed of three testruns of every version of the algorithm. The test was conducted using just one thread and \textit{K} equal to 1. Thus, it shows the pure sequential speed.
+Figure[\ref{fig:seq_comp}] shows the average speed of three testruns of every version of the algorithm. The test was conducted using just one thread and matching length of one character. Thus, it shows the pure sequential speed.
 The \textit{Reference} - Version is the originally given  algorithm with no optimizations applied, while \textit{Comp-Opt} is the same source with compiler optimizations enabled. \textit{Manual-Opt} is the manually optimized source code, with compiler optimizations still enabled.
 \textit{OMP - For } is an OMP Version using a \textit{parallel for} construct and \textit{OMP - Tasks} uses the \textit{tasks} constructs.
 Both OpenMP versions are slightly slower than the reference. That is maybe caused by additional overhead needed for thread initialization and  organization.
 
 Both optimized sequential algorithms show a much better performance. Also, it can easily be seen that manual optimization using \textit{loop peeling} and \textit{loop unwinding} is well worth the effort if pure speed is needed. It still beats the compiler's optimizations and is almost three times faster than the reference implementation.
 
+\begin{figure}[hbtp]
+\caption{OpenMP Parallel For Loop}
+\centering
+\label{fig:omp_parallel}
+\includegraphics[scale=0.8]{omp_for.png}
+\end{figure}
+
+\begin{figure}[hbtp]
+\caption{OpenMP Tasks}
+\centering
+\label{fig:omp_tasks}
+\includegraphics[scale=0.8]{omp_tasks.png}
+\end{figure}
+
+Figure[\ref{fig:omp_parallel}] and figure[\ref{fig:omp_tasks}] show a comparison of the two OpenMP versions described above using a  varying number of threads as well as varying matching lengths(\textit{K}). With $K=1$ the performance of the eight thread version is roughly the same as the manually optimized sequential version. Memory allocation is suspected to be the main cause. As soon as $K$ is increased and thus less \textit{Matches} have to be allocated, the speed increases dramatically and stays consistent.
+Using 8 Threads the program runs roughly 16x faster.
+The differences between the tasks and parallel - for implementation seem to be neglectable, albeit the \textit{parallel for} versions seems a little more stable in its execution speed.
 \end{document}
