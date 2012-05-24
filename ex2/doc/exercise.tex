@@ -8,7 +8,7 @@
 
 %\usepackage[ansinew]{inputenc}
 \usepackage[utf8]{inputenc}	%supports Umlaute
-\usepackage{german, ngerman}
+%\usepackage{german, ngerman}
 \usepackage{color}
 
 \usepackage{lmodern} %Type1-font for non-english texts and characters
@@ -155,5 +155,5 @@ Both optimized sequential algorithms show a much better performance. Also, it ca
 
 Figure[\ref{fig:omp_parallel}] and figure[\ref{fig:omp_tasks}] show a comparison of the two OpenMP versions described above using a  varying number of threads as well as varying matching lengths(\textit{K}). With $K=1$ the performance of the eight thread version is roughly the same as the manually optimized sequential version. Memory allocation is suspected to be the main cause. As soon as $K$ is increased and thus less \textit{Matches} have to be allocated, the speed increases dramatically and stays consistent.
 Using 8 threads the program runs roughly 16x faster.
-The differences between the tasks and \textit{parallel for} implementation seem to be neglectable, albeit the \textit{parallel for} versions seems a little more stable in its execution speed.
+The differences between the tasks and \textit{parallel for} implementation seem to be neglectable, albeit the \textit{parallel for} version seems a little more stable in its execution speed.
 \end{document}
