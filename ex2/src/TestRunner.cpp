@@ -10,7 +10,7 @@
 #include "StopwatchNoBoost.h"
 
 TestRunner::TestRunner(Testables testables, const string& A, const string& B,
-        const size_t k):
+        const size_t k, const bool compareResults):
         A(A),
         B(B),
         k(k)
@@ -28,27 +28,31 @@ TestRunner::TestRunner(Testables testables, const string& A, const string& B,
         StopwatchNoBoost stopwatch((*it)->getName(), B.size() * A.size());
         (*it)->run(A, B, k);
         stopwatch.stop();
-	getHash((*it), currentHash);	
-	if(firstRun == false){
-	    if( 0 != memcmp(&currentHash[0], &lastHash[0], SHA_DIGEST_LENGTH)){
-	   	std::cerr << "FAILED\n"; 
-		failed = true;
-	    }
-	}
 
-	std::copy(&currentHash[0], &currentHash[SHA_DIGEST_LENGTH], &lastHash[0]);
-	firstRun = false;
+        if( compareResults ){
+            getHash((*it), currentHash);
+            if(firstRun == false){
+                if( 0 != memcmp(&currentHash[0], &lastHash[0], SHA_DIGEST_LENGTH)){
+                std::cerr << "FAILED\n";
+                failed = true;
+                }
+            }
+
+            std::copy(&currentHash[0], &currentHash[SHA_DIGEST_LENGTH], &lastHash[0]);
+            firstRun = false;
+        }
 
 	}catch(std::bad_alloc& e){
 	    cerr << (*it)->getName() << " failed. Reason: " << e.what() << "\n";
-	}
+    }
 	delete (*it);
     }
-
-   if(!failed){
-    std::cout << "Success!\n";
-    }else{
-    std::cerr << "SOME TESTS FAILED!\n";
+    if(compareResults){
+       if(!failed){
+        std::cout << "Success!\n";
+        }else{
+        std::cerr << "SOME TESTS FAILED!\n";
+        }
     }
 }
 

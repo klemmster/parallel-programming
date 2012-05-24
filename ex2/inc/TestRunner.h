@@ -12,7 +12,7 @@ using namespace std;
 class TestRunner
 {
 public:
-    TestRunner (Testables testables, const string& A, const string& B, const size_t k);
+    TestRunner (Testables testables, const string& A, const string& B, const size_t k, const bool compareResults);
     virtual ~TestRunner () {};
 
 private:

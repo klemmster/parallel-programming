@@ -13,11 +13,14 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
+    bool compareResults = true;
     if(argc < 4){
         printf("Not enough arguments\n");
         printf("SampleCall: ./ex2 file1 file2 NUMRESULTS\n");
         printf("\n -- Note: file is expected to be in data\n");
         return EXIT_FAILURE;
+    } else if( argc > 4){
+        compareResults = false;
     }
 
    string a(argv[1]);
@@ -41,7 +44,7 @@ int main(int argc, char const *argv[])
    testables.push_back(seqOpt);
    testables.push_back(seqOpt2);
 
-   TestRunner testRunner(testables, fa.getContent(), fb.getContent(), k);
+   TestRunner testRunner(testables, fa.getContent(), fb.getContent(), k, compareResults);
 
    return EXIT_SUCCESS;
 }

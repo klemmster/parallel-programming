@@ -20,7 +20,7 @@ public:
         //std::cout << id << " took: " << millis
         //          << "ms ("<< work/(millis*1000.0) << " MWpS)\n" ;};
 
-        std::cout << ";;;;" << id << ";" << millis << ";" << work/(millis*1000.0) << ";\n" ;};
+        std::cout <<";"<< millis << ";" << work/(millis*1000.0) ;};
     void stop() { gettimeofday(&end, 0); }; 
 
 private:
