@@ -19,12 +19,6 @@ void OpenMPAlgorithm::run(const std::string& A, const std::string& B, const size
     const size_t rowLength = A.size();
     const size_t colLength = B.size();
     const size_t indexSize = rowLength+colLength-1;
-    /*
-    printf("Row %lu\n", rowLength);
-    printf("Col %lu\n", colLength);
-    printf("ColxRow %lu\n", colLength*rowLength);
-    */
-
 
     m_k = k;
     Index* startIndices = new Index[indexSize];
