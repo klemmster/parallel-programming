@@ -1,3 +1,8 @@
+/* -*  *  *  *  *  *  *  *  *  *  *  *
+*   Marcel Karsten -- 343619,
+*   Patrick Lorenz -- 341922,
+*   Richard Klemm -- 343635
+*  *  *  *  *  *  *  *  *  *  *  *  */
 #ifndef SEQUENTIALOPTIMIZEDALGORITHM_H_6FR8SQMW
 #define SEQUENTIALOPTIMIZEDALGORITHM_H_6FR8SQMW
 

@@ -1,8 +1,13 @@
 #!/bin/bash
+###########################
+#  Marcel Karsten -- 343619,
+#  Patrick Lorenz -- 341922,
+#  Richard Klemm -- 343635
+###########################
 echo "Bash version ${BASH_VERSION}..."
 echo "file1; file2; threads; k; iteration; Sequential; OpenMP; OpenMP-Tasks; Optimized; Optimized2" > benchmarklow.txt
 
-    for THREADS in 1 2 
+    for THREADS in 1 2
     do
         for k in 1 10 20 30 40 50
         do
@@ -16,5 +21,5 @@ echo "file1; file2; threads; k; iteration; Sequential; OpenMP; OpenMP-Tasks; Opt
             done
 	done
     done
-    
+
 

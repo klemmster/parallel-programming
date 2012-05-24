@@ -1,3 +1,8 @@
+/* -*  *  *  *  *  *  *  *  *  *  *  *
+*   Marcel Karsten -- 343619,
+*   Patrick Lorenz -- 341922,
+*   Richard Klemm -- 343635
+*  *  *  *  *  *  *  *  *  *  *  *  */
 #ifndef MATCH_H_Q4UHXBAL
 #define MATCH_H_Q4UHXBAL
 
@@ -51,7 +56,7 @@ public:
      };
 
      std::string toString() const {
-     	
+
 	std::ostringstream out;
 	out << m_x << m_y << m_k << "\n";
 	return out.str();

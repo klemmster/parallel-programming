@@ -1,3 +1,8 @@
+/* -*  *  *  *  *  *  *  *  *  *  *  *
+*   Marcel Karsten -- 343619,
+*   Patrick Lorenz -- 341922,
+*   Richard Klemm -- 343635
+*  *  *  *  *  *  *  *  *  *  *  *  */
 #include "SequentialOptimizedAlgorithm.h"
 #include <iostream>
 
@@ -38,6 +43,6 @@ Matches SequentialOptimizedAlgorithm::collect(){
             }
         }
 	}
-		
+
     return matches;
 }

@@ -1,3 +1,8 @@
+/* -*  *  *  *  *  *  *  *  *  *  *  *
+*   Marcel Karsten -- 343619,
+*   Patrick Lorenz -- 341922,
+*   Richard Klemm -- 343635
+*  *  *  *  *  *  *  *  *  *  *  *  */
 #include "SequentialOptimizedAlgorithm2.h"
 
 SequentialOptimizedAlgorithm2::SequentialOptimizedAlgorithm2(const std::string name):

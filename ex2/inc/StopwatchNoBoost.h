@@ -1,3 +1,8 @@
+/* -*  *  *  *  *  *  *  *  *  *  *  *
+*   Marcel Karsten -- 343619,
+*   Patrick Lorenz -- 341922,
+*   Richard Klemm -- 343635
+*  *  *  *  *  *  *  *  *  *  *  *  */
 #ifndef STOPWATCHNOBOOST_H
 #define STOPWATCHNOBOOST_H
 
@@ -21,7 +26,7 @@ public:
         //          << "ms ("<< work/(millis*1000.0) << " MWpS)\n" ;};
 
         std::cout <<";"<< millis << ";" << work/(millis*1000.0) ;};
-    void stop() { gettimeofday(&end, 0); }; 
+    void stop() { gettimeofday(&end, 0); };
 
 private:
     timeval start;
