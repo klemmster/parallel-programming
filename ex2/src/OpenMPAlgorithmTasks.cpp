@@ -71,17 +71,21 @@ void OpenMPAlgorithmTasks::run(const std::string& A, const std::string& B, const
 						++matchSize;
 					}
 					else if ( matchSize > 0 ) {
+						if(matchSize >= m_k){
 						Match match(row-1, col-1, matchSize);
 						//printf("%d\n", omp_get_thread_num());
 						results[omp_get_thread_num()].push_back(match);
+						}
 						matchSize = 0;
 					}
 				}
 				//check if last comparison was true (fetch last match)
 				if ( matchSize > 0 ) {
+					if(matchSize >= m_k){
 						Match match(row-1, col-1, matchSize);
 						//printf("%d\n", omp_get_thread_num());
 						results[omp_get_thread_num()].push_back(match);
+						}
 				}
 			}
 		}
@@ -96,9 +100,7 @@ Matches OpenMPAlgorithmTasks::collect(){
     Matches::iterator it2;
     for(it=results.begin(); it!=results.end(); ++it){
         for(it2=(*it).begin(); it2!=(*it).end(); ++it2){
-            if((*it2).getK() >= m_k){
                 collected.push_back((*it2));
-            }
         }
     }
     return collected;
