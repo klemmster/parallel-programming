@@ -68,7 +68,6 @@ void OpenMPAlgorithmTasks::run(const std::string& A, const std::string& B, const
 						results[omp_get_thread_num()].push_back(match);
 				}
 			}
-			#pragma omp taskwait
 		}
 	}
 }
