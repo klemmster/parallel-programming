@@ -20,6 +20,12 @@ include_directories(${Boost_INCLUDE_DIRS})
 link_directories ( ${Boost_LIBRARY_DIRS} )
 
 find_package(OpenSSL)
+if(OPENSSL_FOUND)
+	include_directories(${OPENSSL_INCLUDE_DIR})
+	link_directories(${OPENSSL_LIBRARY_DIR})
+else()
+	MESSAGE(STATUS "OpenSSL not found!")
+endif()
 
 include(FindOpenMP)
 if(OPENMP_FOUND)

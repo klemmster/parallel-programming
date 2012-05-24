@@ -88,21 +88,25 @@ Foster's Methodology:
 
 \textbf{Partitioning}
 
-domain decomposition, functional decomposition; good: minimize redundant computations and redundant data storage, primitive tasks are the same size, number of tasks increase with problem size
+To partition the given problem the diagonals of the matrix can be used. The computations on these are independet of each other. So it is possible to assign one diagonal to one task. 
 
-Memory consumption: higher k $\rightarrow$ lower memory consumption
+This leads to the advantage that the number of tasks grows with the problem size because with growing sequences the number of diagonals grows. Furthermore there are no redundant computations and the memory consumption is more efficient because only those matching substrings are saved that satisfy the value of the given K.
+
+Disadvantages are that the different tasks do not have the same size and many tasks have to hold the same parts of the sequences in their memory.
+
+
 
 \textbf{Communication}
 
-local communication, global communication; good: comm. is balanced among tasks, tasks can communicate concurrently, tasks can perform computations concurrently
+As stated in the section before computations on the diagonals are independent of each other. Therefore there is no communication needed between the task. At the end of computations the results of the tasks have to be collected.
 
 \textbf{Agglomeration}
 
--
+It is possible to agglomerate tasks into one task by combining several diagonals. To increase locality the combined diagonals should be adjacent.
 
 \textbf{Mapping}
 
--
+
 
 \textbf{(b) OpenMP}
 
