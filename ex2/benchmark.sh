@@ -1,5 +1,9 @@
 #!/bin/bash
-
+###########################
+#  Marcel Karsten -- 343619,
+#  Patrick Lorenz -- 341922,
+#  Richard Klemm -- 343635
+###########################
 echo "" > benchmark.txt
 for i in {1..3}
 do
@@ -16,5 +20,5 @@ do
             done
 	done
     done
-done    
+done
 

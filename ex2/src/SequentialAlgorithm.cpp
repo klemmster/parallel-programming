@@ -1,3 +1,8 @@
+/* -*  *  *  *  *  *  *  *  *  *  *  *
+*   Marcel Karsten -- 343619,
+*   Patrick Lorenz -- 341922,
+*   Richard Klemm -- 343635
+*  *  *  *  *  *  *  *  *  *  *  *  */
 #pragma GCC push_options
 #pragma GCC optimize ("O0")
 

@@ -1,3 +1,8 @@
+/* -*  *  *  *  *  *  *  *  *  *  *  *
+*   Marcel Karsten -- 343619,
+*   Patrick Lorenz -- 341922,
+*   Richard Klemm -- 343635
+*  *  *  *  *  *  *  *  *  *  *  *  */
 #ifndef STOPWATCH_H_XU6R2ZE0
 #define STOPWATCH_H_XU6R2ZE0
 #include <boost/chrono.hpp>

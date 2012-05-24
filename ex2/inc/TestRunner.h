@@ -1,3 +1,8 @@
+/* -*  *  *  *  *  *  *  *  *  *  *  *
+*   Marcel Karsten -- 343619,
+*   Patrick Lorenz -- 341922,
+*   Richard Klemm -- 343635
+*  *  *  *  *  *  *  *  *  *  *  *  */
 #ifndef TESTRUNNER_H_7UAFFJ2O
 #define TESTRUNNER_H_7UAFFJ2O
 
@@ -16,7 +21,7 @@ public:
     virtual ~TestRunner () {};
 
 private:
-    
+
     void getHash(Testable* testable, unsigned char result[]);
     const string A;
     const string B;

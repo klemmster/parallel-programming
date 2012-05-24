@@ -1,4 +1,4 @@
-* -*  *  *  *  *  *  *  *  *  *  *  *
+/* -*  *  *  *  *  *  *  *  *  *  *  *
 *   Marcel Karsten -- 343619,
 *   Patrick Lorenz -- 341922,
 *   Richard Klemm -- 343635
