@@ -112,15 +112,31 @@ It is possible to agglomerate tasks into one task by combining several diagonals
 The mapping of the tasks to processors/threads is done by the operating system or by the OpenMP library.
 
 \textbf{(b) OpenMP}
+Due to it's structure, the OpenMPAlgorithms are able to handle the large datasets to some extend, too. The amount of memory required is directly related to K, thus if K is large enough, the program does not run out space.
 
 See source of classes OpenMPAlgorithm and OpenMPAlgorithmTasks.
 
 \textbf{(c) Optimization}
 
-See source of classes SequentialOptimizedAlgorithm and SequentialOptimizedAlgorithm2.
+Two concepts of optimization were deployed: Optimizations done automatically when configuring the compiler correctly and manually optimizing the code. The former was deployed in the  SequentialOptimizedAlgorithm and the CMakeLists.txt file; the latter in the SequentialOptimizedAlgorithm2 file.
+
+As compiler optimization settings, the \textit{-O3}flag as well as the \textit{-march=native} flag were set.
 
 \section{Exercise 3 - Benchmarking}
 
-Results here...
+\begin{figure}[hbtp]
+\caption{Single Speed Comparison}
+\centering
+\label{fig:seq_comp}
+\includegraphics[scale=0.8]{seq.png}
+\end{figure}
+
+As a result of task twom four different versions of the implementation were created. 
+Figure[\ref{fig:seq_comp}] shows the average speed of three testruns of every version of the algorithm. The test was conducted using just one thread and \textit{K} equal to 1. Thus, it shows the pure sequential speed.
+The \textit{Reference} - Version is the originally given  algorithm with no optimizations applied, while \textit{Comp-Opt} is the same source with compiler optimizations enabled. \textit{Manual-Opt} is the manually optimized source code, with compiler optimizations still enabled.
+\textit{OMP - For } is an OMP Version using a \textit{parallel for} construct and \textit{OMP - Tasks} uses the \textit{tasks} constructs.
+Both OpenMP versions are slightly slower than the reference. That is maybe caused by additional overhead needed for thread initialization and  organization.
+
+Both optimized sequential algorithms show a much better performance. Also, it can easily be seen that manual optimization using \textit{loop peeling} and \textit{loop unwinding} is well worth the effort if pure speed is needed. It still beats the compiler's optimizations and is almost three times faster than the reference implementation.
 
 \end{document}
