@@ -17,9 +17,10 @@ public:
    	float seconds =(end.tv_sec - start.tv_sec);
         float millis = (seconds*1000) + ((end.tv_usec-start.tv_usec)/1000.0);
         cout.precision(5);
-        std::cout << id << " took: " << millis
-                  << "ms ("<< work/(millis*1000.0) << " MWpS)\n" ;};
+        //std::cout << id << " took: " << millis
+        //          << "ms ("<< work/(millis*1000.0) << " MWpS)\n" ;};
 
+        std::cout << ";;;;" << id << ";" << millis << ";" << work/(millis*1000.0) << ";\n" ;};
     void stop() { gettimeofday(&end, 0); }; 
 
 private:
