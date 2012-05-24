@@ -5,9 +5,9 @@ for i in {1..3}
 do
     for THREADS in 1 2 3 4 8
     do
-        for k in {1..10..5}
+        for k in {1..100..10}
         do
-	    for count in {1..5}
+	    for count in {1..3}
 	    do
 	        echo "dna-A$i dna-B$i; $THREADS; $k;$count;" >> benchmark.txt
 		echo "" >> benchmark.txt
