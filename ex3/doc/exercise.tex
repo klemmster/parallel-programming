@@ -55,8 +55,8 @@
 
 \textbf{(a) Mapping to a regular scan}
 
-$x = f(\text{a}_i,\text{f}_i) = \begin{cases} x = \text{a}_i & \text{if } \text{f}_i = 1 \\
-								x = -\text{b}_{i-1} + \text{a}_i & \text{if } \text{f}_i = 0 \\
+$x = f(\text{a}_i,\text{f}_i) = \begin{cases} x = \text{a}_i -\text{b}_{i-1} & \text{if } \text{f}_i = 1 \\
+								x = \text{a}_i & \text{if } \text{f}_i = 0 \\
 \end{cases}$
 
 $x = \text{a}_i  - ( \text{b}_{i-1} * \text{f}_i)$
@@ -99,6 +99,14 @@ Analysis of the algorithm is ignoring communication overhead, as it is assumed t
 \textbf{(c) Handling many elements}
 
 
+\textbf{(d) Recursion}
+
+\begin{figure}[hbtp]
+\centering
+\label{fig:para_algo}
+\includegraphics[scale=1]{recur}
+\caption{Recursive Scan}
+\end{figure}
 
 
 \end{document}
