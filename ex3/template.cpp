@@ -9,7 +9,7 @@ using namespace cl;
 
 int main() {
     // Create the two input vectors
-    const int LIST_SIZE = 16;
+    const int LIST_SIZE = 8;
     int *A = new int[LIST_SIZE];
     for(int i = 0; i < LIST_SIZE; i++) {
         A[i] = i;
@@ -48,7 +48,7 @@ int main() {
         program.build(devices);
 
         // Make kernel
-        Kernel kernel(program, "scan");
+        Kernel kernel(program, "reduce");
 
         // Create memory buffers
         Buffer buffer = Buffer(context, CL_MEM_READ_WRITE, LIST_SIZE * sizeof(int));
