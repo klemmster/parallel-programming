@@ -29,4 +29,53 @@ __kernel void reduce(__global int *buffer, const int size) {
         }
         barrier(CLK_GLOBAL_MEM_FENCE);
     }
+
+    barrier(CLK_GLOBAL_MEM_FENCE);
+
+    buffer[size-1] = 0;
+    for(unsigned d=size>>1; d>0; d>>=1){
+        int threadLocalVal;
+        if((i+1) % (d) == 0){
+            threadLocalVal = buffer[i];
+        }
+        barrier(CLK_LOCAL_MEM_FENCE);
+        if((i+1) % (2*d) == 0){
+            buffer[i] = threadLocalVal;
+            int index = i-1;
+            if(index >= 0){
+                buffer[index] = d;
+            }else{
+                buffer[index] = 255;
+            }
+            //buffer[i-d] = threadLocalVal;
+        }
+        /*
+        else if((i+1) % (d) == 0){
+            buffer[i+d] += threadLocalVal;
+        }
+        */
+        barrier(CLK_GLOBAL_MEM_FENCE);
+    }
+
+    buffer[i] = i;
+}
+
+__kernel void sweepdown(__global int *buffer, const int size){
+    int last = buffer[size-1];
+    const int i = get_global_id(0);
+
+    for(unsigned d=size>>1; d>0; d>>=1){
+        int threadLocalVal;
+        if((i+1) % (d) == 0){
+            threadLocalVal = buffer[i];
+        }
+        barrier(CLK_GLOBAL_MEM_FENCE);
+        if((i+1) % (2*d) == 0){
+            buffer[i-d] = threadLocalVal;
+        }else if((i+1) % (d) == 0){
+            buffer[i+d] += threadLocalVal;
+        }
+        barrier(CLK_GLOBAL_MEM_FENCE);
+    }
+    buffer[i] = i;
 }

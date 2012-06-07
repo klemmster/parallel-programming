@@ -9,10 +9,10 @@ using namespace cl;
 
 int main() {
     // Create the two input vectors
-    const int LIST_SIZE = 8;
+    const int LIST_SIZE = 12;
     int *A = new int[LIST_SIZE];
     for(int i = 0; i < LIST_SIZE; i++) {
-        A[i] = i;
+        A[i] = i+1;
     }
 
    try {
@@ -48,7 +48,8 @@ int main() {
         program.build(devices);
 
         // Make kernel
-        Kernel kernel(program, "reduce");
+        Kernel reduceKernel(program, "reduce");
+        Kernel sweepKernel(program, "sweepdown");
 
         // Create memory buffers
         Buffer buffer = Buffer(context, CL_MEM_READ_WRITE, LIST_SIZE * sizeof(int));
@@ -57,13 +58,17 @@ int main() {
         queue.enqueueWriteBuffer(buffer, CL_TRUE, 0, LIST_SIZE * sizeof(int), A);
 
         // Set arguments to kernel
-        kernel.setArg(0, buffer);
-        kernel.setArg(1, LIST_SIZE );
+        reduceKernel.setArg(0, buffer);
+        reduceKernel.setArg(1, LIST_SIZE);
+        sweepKernel.setArg(0, buffer);
+        sweepKernel.setArg(1, LIST_SIZE);
 
         // Run the kernel on specific ND range
         NDRange global(LIST_SIZE);
         NDRange local(1);
-        queue.enqueueNDRangeKernel(kernel, NullRange, global, local);
+        NDRange nullRange(0);
+        queue.enqueueNDRangeKernel(reduceKernel, nullRange, global, local);
+        //queue.enqueueNDRangeKernel(sweepKernel, NullRange, global, local);
 
         // Read buffer C into a local list
         int *C = new int[LIST_SIZE];
