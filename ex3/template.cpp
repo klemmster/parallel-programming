@@ -9,7 +9,7 @@ using namespace cl;
 
 int main() {
     // Create the two input vectors
-    const int LIST_SIZE = 8;
+    const int LIST_SIZE = 17;
     int *A = new int[LIST_SIZE];
     for(int i = 0; i < LIST_SIZE; i++) {
         A[i] = i;
@@ -48,10 +48,10 @@ int main() {
         program.build(devices);
 
         // Make kernel
-        Kernel reduceKernel(program, "scan");
+        Kernel reduceKernel(program, "naivParallelscan");
 
         // Create memory buffers
-        Buffer buffer = Buffer(context, CL_MEM_READ_ONLY, LIST_SIZE * sizeof(int));
+        Buffer buffer = Buffer(context, CL_MEM_READ_WRITE, LIST_SIZE * sizeof(int));
         Buffer outputBuffer = Buffer(context, CL_MEM_WRITE_ONLY, LIST_SIZE * sizeof(int));
         //Buffer localBuffer = Buffer(context, CL_MEM_READ_WRITE, LIST_SIZE * sizeof(int));
 
@@ -67,12 +67,12 @@ int main() {
 
         // Run the kernel on specific ND range
         NDRange global(LIST_SIZE);
-        NDRange local(1);
+        NDRange local(LIST_SIZE);
         queue.enqueueNDRangeKernel(reduceKernel, NullRange, global, local);
 
         // Read buffer C into a local list
         int *C = new int[LIST_SIZE];
-        queue.enqueueReadBuffer(outputBuffer, CL_TRUE, 0, LIST_SIZE * sizeof(int), C);
+        queue.enqueueReadBuffer(buffer, CL_TRUE, 0, LIST_SIZE * sizeof(int), C);
 
         for(int i = 0; i < LIST_SIZE; i ++)
              std::cout << C[i] << std::endl;

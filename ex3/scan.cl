@@ -1,20 +1,35 @@
-
-__kernel void scan(__global int *buffer, const int size) {
+__kernel void seqscan(__global int *buffer, const int size) {
 
     // Get the index of the current element to be processed
     const int i = get_global_id(0);
 
-    for(unsigned offset=1; offset<size; offset *=2){
+    if( i == 0){
+        // Do the operation
+        for(unsigned int i=1; i<size; ++i){
+            buffer[i] = buffer[i-1] + buffer[i];
+        }
+    }
+}
+
+__kernel void naivParallelscan(__global int *source, const int size) {
+
+    // Get the index of the current element to be processed
+    const int i = get_global_id(0);
+
+    for(unsigned int offset=1; offset<size; offset *=2)
+    {
         int threadLocalVal;
         if(i>=offset){
-            threadLocalVal = buffer[i-offset];
+            threadLocalVal = source[i-offset];
         }
-        barrier(CLK_GLOBAL_MEM_FENCE);
+        barrier(CLK_GLOBAL_MEM_FENCE | CLK_LOCAL_MEM_FENCE);
         if(i>=offset){
-            buffer[i] = threadLocalVal + buffer[i];
+            source[i] = threadLocalVal + source[i];
+            //buffer[i] = threadLocalVal;// + buffer[i];
         }
-        barrier(CLK_GLOBAL_MEM_FENCE);
     }
+
+    //source[i] = get_local_id(0);
 }
 
 
