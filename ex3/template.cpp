@@ -9,10 +9,10 @@ using namespace cl;
 
 int main() {
     // Create the two input vectors
-    const int LIST_SIZE = 12;
+    const int LIST_SIZE = 8;
     int *A = new int[LIST_SIZE];
     for(int i = 0; i < LIST_SIZE; i++) {
-        A[i] = i+1;
+        A[i] = i;
     }
 
    try {
@@ -26,7 +26,7 @@ int main() {
             (cl_context_properties)(platforms[0])(),
             0
         };
-        Context context( CL_DEVICE_TYPE_GPU, cps);
+        Context context( CL_DEVICE_TYPE_CPU, cps);
 
         // Get a list of devices on this platform
         vector<Device> devices = context.getInfo<CL_CONTEXT_DEVICES>();
@@ -48,31 +48,31 @@ int main() {
         program.build(devices);
 
         // Make kernel
-        Kernel reduceKernel(program, "reduce");
-        Kernel sweepKernel(program, "sweepdown");
+        Kernel reduceKernel(program, "scan");
 
         // Create memory buffers
-        Buffer buffer = Buffer(context, CL_MEM_READ_WRITE, LIST_SIZE * sizeof(int));
+        Buffer buffer = Buffer(context, CL_MEM_READ_ONLY, LIST_SIZE * sizeof(int));
+        Buffer outputBuffer = Buffer(context, CL_MEM_WRITE_ONLY, LIST_SIZE * sizeof(int));
+        //Buffer localBuffer = Buffer(context, CL_MEM_READ_WRITE, LIST_SIZE * sizeof(int));
 
         // Copy lists A and B to the memory buffers
         queue.enqueueWriteBuffer(buffer, CL_TRUE, 0, LIST_SIZE * sizeof(int), A);
+        //queue.enqueueWriteBuffer(localBuffer, CL_TRUE, 0, LIST_SIZE * sizeof(int), A);
 
         // Set arguments to kernel
         reduceKernel.setArg(0, buffer);
+        //reduceKernel.setArg(1, outputBuffer);
+        //reduceKernel.setArg(2,  sizeof(int)*LIST_SIZE, NULL);
         reduceKernel.setArg(1, LIST_SIZE);
-        sweepKernel.setArg(0, buffer);
-        sweepKernel.setArg(1, LIST_SIZE);
 
         // Run the kernel on specific ND range
         NDRange global(LIST_SIZE);
         NDRange local(1);
-        NDRange nullRange(0);
-        queue.enqueueNDRangeKernel(reduceKernel, nullRange, global, local);
-        //queue.enqueueNDRangeKernel(sweepKernel, NullRange, global, local);
+        queue.enqueueNDRangeKernel(reduceKernel, NullRange, global, local);
 
         // Read buffer C into a local list
         int *C = new int[LIST_SIZE];
-        queue.enqueueReadBuffer(buffer, CL_TRUE, 0, LIST_SIZE * sizeof(int), C);
+        queue.enqueueReadBuffer(outputBuffer, CL_TRUE, 0, LIST_SIZE * sizeof(int), C);
 
         for(int i = 0; i < LIST_SIZE; i ++)
              std::cout << C[i] << std::endl;

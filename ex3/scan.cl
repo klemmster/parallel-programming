@@ -19,63 +19,48 @@ __kernel void scan(__global int *buffer, const int size) {
 
 
 //Reduce -- DownSweep Version http://http.developer.nvidia.com/GPUGems3/gpugems3_ch39.html
-__kernel void reduce(__global int *buffer, const int size) {
+__kernel void reduce(__global const int *buffer, __global int *output, __local int *tmp, const int size) {
 
     const int i = get_global_id(0);
+    int offset = 1;
 
-    for(unsigned d=1; d<size-1; d*=2){
-        if(((i+1) % (2*d)) == 0){
-        buffer[i] = buffer[i] + buffer[i-d];
+    tmp[i] = buffer[i];
+    tmp[i+1] = buffer[i+1];
+
+    for(int d=size>1; d>0; d >>=1)
+    {
+        barrier(CLK_GLOBAL_MEM_FENCE | CLK_LOCAL_MEM_FENCE);
+        if( i < d){
+            int ai = offset*(i+1)-1;
+            int bi = offset*(i+2)-1;
+
+            tmp[bi] += tmp[ai];
         }
-        barrier(CLK_GLOBAL_MEM_FENCE);
+        offset *= 2;
     }
 
-    barrier(CLK_GLOBAL_MEM_FENCE);
+    barrier(CLK_GLOBAL_MEM_FENCE | CLK_LOCAL_MEM_FENCE);
 
-    buffer[size-1] = 0;
-    for(unsigned d=size>>1; d>0; d>>=1){
-        int threadLocalVal;
-        if((i+1) % (d) == 0){
-            threadLocalVal = buffer[i];
-        }
-        barrier(CLK_LOCAL_MEM_FENCE);
-        if((i+1) % (2*d) == 0){
-            buffer[i] = threadLocalVal;
-            int index = i-1;
-            if(index >= 0){
-                buffer[index] = d;
-            }else{
-                buffer[index] = 255;
-            }
-            //buffer[i-d] = threadLocalVal;
-        }
-        /*
-        else if((i+1) % (d) == 0){
-            buffer[i+d] += threadLocalVal;
-        }
-        */
-        barrier(CLK_GLOBAL_MEM_FENCE);
+    /*
+    if( i == 0) {
+        tmp[size-1] = 0;
     }
 
-    buffer[i] = i;
-}
+    for(int d = 1; d < size; d *= 2){
+        offset >>= 1;
+        barrier(CLK_GLOBAL_MEM_FENCE | CLK_LOCAL_MEM_FENCE);
 
-__kernel void sweepdown(__global int *buffer, const int size){
-    int last = buffer[size-1];
-    const int i = get_global_id(0);
+        if (i < d)
+        {
+            int ai = offset*(i+1)-1;
+            int bi = offset*(i+2)-1;
 
-    for(unsigned d=size>>1; d>0; d>>=1){
-        int threadLocalVal;
-        if((i+1) % (d) == 0){
-            threadLocalVal = buffer[i];
+            int t = tmp[ai];
+            tmp[ai] = tmp[bi];
+            tmp[bi] += t;
         }
-        barrier(CLK_GLOBAL_MEM_FENCE);
-        if((i+1) % (2*d) == 0){
-            buffer[i-d] = threadLocalVal;
-        }else if((i+1) % (d) == 0){
-            buffer[i+d] += threadLocalVal;
-        }
-        barrier(CLK_GLOBAL_MEM_FENCE);
     }
-    buffer[i] = i;
+    barrier(CLK_GLOBAL_MEM_FENCE | CLK_LOCAL_MEM_FENCE);
+    */
+    output[i] = tmp[i];
 }
