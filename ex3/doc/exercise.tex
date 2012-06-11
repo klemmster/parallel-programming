@@ -115,5 +115,21 @@ Analysis of the algorithm is ignoring communication overhead, as it is assumed t
 \caption{Recursive Scan - other variant}
 \end{figure}
 
+Pseudo code (for figure "`Recursive Scan - other variant"'):
+\begin{verbatim}
+scan(ref array)
+  if(array.size > 2)
+    scan(array.firstPart)
+    scan(array.secondPart)
+    correct(array.secondPart, with(array.firstPart))
+  else if(array.size == 2)
+    array[1] = array[0] + array[1]
+	
+correct(ref array, firstPart)
+  for(ref element : array)
+    element += lastElementOf(array)
+\end{verbatim}
+
+
 
 \end{document}
