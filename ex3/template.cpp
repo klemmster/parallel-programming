@@ -9,7 +9,7 @@ using namespace cl;
 
 int main() {
     // Create the two input vectors
-    const int LIST_SIZE = 17;
+    const int LIST_SIZE = 1023;
     int *A = new int[LIST_SIZE];
     for(int i = 0; i < LIST_SIZE; i++) {
         A[i] = i;

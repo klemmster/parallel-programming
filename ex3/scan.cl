@@ -22,14 +22,13 @@ __kernel void naivParallelscan(__global int *source, const int size) {
         if(i>=offset){
             threadLocalVal = source[i-offset];
         }
-        barrier(CLK_GLOBAL_MEM_FENCE | CLK_LOCAL_MEM_FENCE);
+        barrier(CLK_LOCAL_MEM_FENCE);
         if(i>=offset){
             source[i] = threadLocalVal + source[i];
             //buffer[i] = threadLocalVal;// + buffer[i];
         }
+        barrier(CLK_GLOBAL_MEM_FENCE);
     }
-
-    //source[i] = get_local_id(0);
 }
 
 
@@ -42,7 +41,7 @@ __kernel void reduce(__global const int *buffer, __global int *output, __local i
     tmp[i] = buffer[i];
     tmp[i+1] = buffer[i+1];
 
-    for(int d=size>1; d>0; d >>=1)
+    for(int d=size>>1; d>0; d >>=1)
     {
         barrier(CLK_GLOBAL_MEM_FENCE | CLK_LOCAL_MEM_FENCE);
         if( i < d){
