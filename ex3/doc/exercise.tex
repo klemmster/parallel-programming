@@ -55,18 +55,58 @@
 
 \textbf{(a) Mapping to a regular scan}
 
-$x = f(\text{a}_i,\text{f}_i) = \begin{cases} x = \text{a}_i -\text{b}_{i-1} & \text{if } \text{f}_i = 1 \\
+The normal scan is defined as:
+
+$b_i = \sum\limits_{k=0}^{i}a_k$
+
+or recursive:
+
+$b_i = b_{i-1} + a_i$
+
+where $b_{-1}$ is defined as 0, which leads to the following example:
+
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+i&0&1&2&3&4\\
+\hline
+A&1& 4&2&3&1\\
+\hline
+B&1&5&7&10&11\\
+\hline
+\end{tabular}
+
+Introducing an array which resets the scan if its element equals 1, the following should be accomplished:
+
+
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+i&0&1&2&3&4\\
+\hline
+A&1& 4&2&3&1\\
+\hline
+F&1& 0&0&1&0\\
+\hline
+B&1&5&7&3&7\\
+\hline
+\end{tabular}
+
+We decided to devise an operator which is applied on the recursive definition:
+
+$b_i = b_{i-1} + f(a_i, \text{f}_i)$
+
+where $f(a_i, \text{f}_i)$ is defined as:
+
+$f(\text{a}_i,\text{f}_i) = \begin{cases} x = \text{a}_i -\text{b}_{i-1} & \text{if } \text{f}_i = 1 \\
 								x = \text{a}_i & \text{if } \text{f}_i = 0 \\
 \end{cases}$
 
-$x = \text{a}_i  - ( \text{b}_{i-1} * \text{f}_i)$
+$f(\text{a}_i,\text{f}_i) = \text{a}_i  - ( \text{b}_{i-1} * \text{f}_i)$
 
-not associative?!
 
 %\begin{cases}  x = \text{a}_i & \text{if } \text{f}_i = 0 \vee i = 0\\
 %								x = \text{a}_i  + \text{b}_{i-1}& \text{if } \text{f}_i = 1	  %\end{cases}$
 %\sum\limits_{n=1}^{\text{f}_{i-n} = 1}\text{a}_{i-n}
-
+\newpage
 
 \textbf{(b) Parallel Scan}
 
@@ -90,15 +130,26 @@ Execution time depending on n/p & $p \ge n -1 : \log_2n$ \newline ca.  $p < n -1
 
 \end{tabular}
 
-While the parallel scan is much faster than the sequential scan, it has  a couple of drawbacks. Most noticeably it does not accept all input lengths.
+While the parallel scan is much faster than the sequential scan, it has  a couple of drawbacks. For instance in distributed memory architectures every node needs to hold it's own copy of the array to be scanned. Additionally after each iteration of j these arrays have to be synchronized. In shared memory architectures that is not the case.
 
-Analysis of the algorithm is ignoring communication overhead, as it is assumed that all parallel operations can be executed simultaneously.
+The numerical analysis of the algorithm shown in the table is ignoring communication overhead, as it is assumed that all parallel operations can be executed simultaneously.
 
 
-
+\newpage
 \textbf{(c) Handling many elements}
 
+The array can be sliced into p (number of processors) parts. On each part one processor does the sequential scan. Afterwards on the last elements of each part a parallel scan with all processors is executed calling the provided scan function. Finally the parts are corrected by using the results of the parallel scan, where each processor adds the associated number to its first scan.
 
+\begin{figure}[hbtp]
+\centering
+\label{fig:le}
+\includegraphics[scale=1]{le}
+\caption{Handling many elements having 3 processors}
+\end{figure}
+
+Compared to the first algorithm the utilization is better. Having at least as many processors as elements in b, more processors idle with growing j. In c only one processor is idling at the last step.
+
+\newpage
 \textbf{(d) Recursion}
 
 \begin{figure}[hbtp]

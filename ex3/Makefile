@@ -1,5 +1,5 @@
-CFLAGS += -Wall
-LDFLAGS += -lrt -lOpenCL
+CFLAGS += -Wall 
+LDFLAGS += -lrt -lOpenCL -I.
 
 template:
 
