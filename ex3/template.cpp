@@ -74,6 +74,7 @@ int main() {
          std::cout << "Difference last two elements: " <<
                  resultNaive[LIST_SIZE_NAIVE-1]-resultNaive[LIST_SIZE_NAIVE-2] << "\n";
 
+         Kernel reduceSweepKernel =(program, "reduce");
     } catch(Error error) {
        std::cout << error.what() << "(" << error.err() << ")" << std::endl;
     }
