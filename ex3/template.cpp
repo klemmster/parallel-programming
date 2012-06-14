@@ -46,17 +46,18 @@ int main() {
         // Build program for these specific devices
         program.build(devices);
 
+        /*
         // Make kernel
         Kernel naiveKernel(program, "naivParallelscan");
 
         // Create memory buffers
-        Buffer buffer = Buffer(context, CL_MEM_READ_WRITE, LIST_SIZE_NAIVE * sizeof(int));
+        Buffer naiveSrcBuffer = Buffer(context, CL_MEM_READ_WRITE, LIST_SIZE_NAIVE * sizeof(int));
 
         // Copy list inputNaive to the memory buffers
-        queue.enqueueWriteBuffer(buffer, CL_TRUE, 0, LIST_SIZE_NAIVE * sizeof(int), inputNaive);
+        queue.enqueueWriteBuffer(naiveSrcBuffer, CL_TRUE, 0, LIST_SIZE_NAIVE * sizeof(int), inputNaive);
 
         // Set arguments to kernel
-        naiveKernel.setArg(0, buffer);
+        naiveKernel.setArg(0, naiveSrcBuffer);
         naiveKernel.setArg(1, LIST_SIZE_NAIVE);
 
         //Global: Overall Num of Elements
@@ -67,14 +68,41 @@ int main() {
 
         // Read buffer C into a local list
         int *resultNaive = new int[LIST_SIZE_NAIVE];
-        queue.enqueueReadBuffer(buffer, CL_TRUE, 0, LIST_SIZE_NAIVE * sizeof(int), resultNaive);
+        queue.enqueueReadBuffer(naiveSrcBuffer, CL_TRUE, 0, LIST_SIZE_NAIVE * sizeof(int), resultNaive);
 
-         std::cout << "Sum Naive Approach: " << resultNaive[LIST_SIZE_NAIVE-1] << std::endl;
-         std::cout << "ListSize: " << LIST_SIZE_NAIVE << std::endl;
-         std::cout << "Difference last two elements: " <<
-                 resultNaive[LIST_SIZE_NAIVE-1]-resultNaive[LIST_SIZE_NAIVE-2] << "\n";
+        std::cout << "Sum Naive Approach: " << resultNaive[LIST_SIZE_NAIVE-1] << std::endl;
+        std::cout << "ListSize: " << LIST_SIZE_NAIVE << std::endl;
+        std::cout << "Difference last two elements: " <<
+                resultNaive[LIST_SIZE_NAIVE-1]-resultNaive[LIST_SIZE_NAIVE-2] << "\n";
 
-         Kernel reduceSweepKernel =(program, "reduce");
+
+        */
+        const int LIST_SIZE_REDUCE = 8;
+        int *inputReduce = new int[LIST_SIZE_REDUCE];
+        for(int i = 0; i < LIST_SIZE_REDUCE; i++) {
+            inputReduce[i] = i;
+        }
+
+        Kernel reduceSweepKernel(program, "reduce");
+        Buffer reduceSrcBuffer = Buffer(context, CL_MEM_READ_WRITE, LIST_SIZE_REDUCE * sizeof(int));
+        queue.enqueueWriteBuffer(reduceSrcBuffer, CL_TRUE, 0, LIST_SIZE_REDUCE * sizeof(int), inputReduce);
+        reduceSweepKernel.setArg(0, reduceSrcBuffer);
+        reduceSweepKernel.setArg(1, LIST_SIZE_REDUCE);
+        NDRange global(LIST_SIZE_REDUCE);
+        NDRange local(LIST_SIZE_REDUCE);
+        queue.enqueueNDRangeKernel(reduceSweepKernel, NullRange, global, local);
+        int *resultReduce = new int[LIST_SIZE_REDUCE];
+        queue.enqueueReadBuffer(reduceSrcBuffer, CL_TRUE, 0, LIST_SIZE_REDUCE * sizeof(int), resultReduce);
+
+        for(int i=0; i < LIST_SIZE_REDUCE; ++i){
+            std::cout << resultReduce[i] << "\n";
+        }
+        std::cout << "Sum Reduce Approach: " << resultReduce[LIST_SIZE_REDUCE-1] << std::endl;
+        std::cout << "ListSize: " << LIST_SIZE_REDUCE << std::endl;
+        std::cout << "Difference last two elements: " <<
+                resultReduce[LIST_SIZE_REDUCE-1]-resultReduce[LIST_SIZE_REDUCE-2] << "\n";
+
+
     } catch(Error error) {
        std::cout << error.what() << "(" << error.err() << ")" << std::endl;
     }

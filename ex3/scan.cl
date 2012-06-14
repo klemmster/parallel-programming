@@ -33,28 +33,29 @@ __kernel void naivParallelscan(__global int *source, const int size) {
 
 
 //Reduce -- DownSweep Version http://http.developer.nvidia.com/GPUGems3/gpugems3_ch39.html
-__kernel void reduce(__global const int *buffer, __global int *output, __local int *tmp, const int size) {
+__kernel void reduce(__global int *buffer, const int size) {
 
     const int i = get_global_id(0);
+    __local int tmp[1024*2];
     int offset = 1;
 
-    tmp[i] = buffer[i];
-    tmp[i+1] = buffer[i+1];
+    tmp[2*i] = buffer[2*i];
+    tmp[2*i+1] = buffer[2*i+1];
 
     for(int d=size>>1; d>0; d >>=1)
     {
-        barrier(CLK_GLOBAL_MEM_FENCE | CLK_LOCAL_MEM_FENCE);
+        barrier(CLK_LOCAL_MEM_FENCE);
         if( i < d){
-            int ai = offset*(i+1)-1;
-            int bi = offset*(i+2)-1;
+            int ai = offset*(2*i+1)-1;
+            int bi = offset*(2*i+2)-1;
 
             tmp[bi] += tmp[ai];
         }
+        barrier(CLK_LOCAL_MEM_FENCE);
         offset *= 2;
     }
 
     barrier(CLK_GLOBAL_MEM_FENCE | CLK_LOCAL_MEM_FENCE);
-
     /*
     if( i == 0) {
         tmp[size-1] = 0;
@@ -74,7 +75,8 @@ __kernel void reduce(__global const int *buffer, __global int *output, __local i
             tmp[bi] += t;
         }
     }
-    barrier(CLK_GLOBAL_MEM_FENCE | CLK_LOCAL_MEM_FENCE);
     */
-    output[i] = tmp[i];
+    barrier(CLK_GLOBAL_MEM_FENCE | CLK_LOCAL_MEM_FENCE);
+    buffer[2*i] = tmp[2*i];
+    buffer[2*i+1] = tmp[2*i+1];
 }
