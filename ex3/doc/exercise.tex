@@ -155,31 +155,28 @@ Compared to the first algorithm the utilization is better. Having at least as ma
 \begin{figure}[hbtp]
 \centering
 \label{fig:para_algo}
-\includegraphics[scale=1]{recur}
-\caption{Recursive Scan}
-\end{figure}
-
-\begin{figure}[hbtp]
-\centering
-\label{fig:para_algo}
 \includegraphics[scale=.75]{recur3}
 \caption{Recursive Scan - other variant}
 \end{figure}
 
-Pseudo code (for figure "`Recursive Scan - other variant"'):
+Pseudo code:
 \begin{verbatim}
 scan(ref array)
   if(array.size > 2)
     scan(array.firstPart)
     scan(array.secondPart)
-    correct(array.secondPart, with(array.firstPart))
+    correct(array.secondPart, lastElementOf(array.firstPart))
   else if(array.size == 2)
     array[1] = array[0] + array[1]
 	
-correct(ref array, firstPart)
+correct(ref array, correction)
   for(ref element : array)
-    element += lastElementOf(array)
+    element += correction
 \end{verbatim}
+
+The line of thought leads to the algorithm shown in the pseudo code and is visualized in figure 3. The algorithm splits the given array as long as the parts are larger than 2 elements. At that point the primitive task of scanning just 2 elements can be executed. Following this the right half of each split step has to be corrected (named as array.secondPart in the pseudo code). The correction is done by adding the last element of the left half (array.firstPart in pseudo code) to each element of the right half.
+
+
 
 
 
