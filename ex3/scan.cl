@@ -33,14 +33,17 @@ __kernel void naivParallelscan(__global int *source, const int size) {
 
 
 //Reduce -- DownSweep Version http://http.developer.nvidia.com/GPUGems3/gpugems3_ch39.html
-__kernel void reduce(__global int *buffer, const int size) {
+__kernel void reduce(__global int *buffer) {
 
-    const int i = get_global_id(0);
-    __local int tmp[1024*2];
+    const int globalIndex = get_global_id(0);
+    if(globalIndex < get_global_size(0)){
+    const int i = get_local_id(0);
+    int size = get_local_size(0);
+    __local int tmp[1024];
     int offset = 1;
 
-    tmp[2*i] = buffer[2*i];
-    tmp[2*i+1] = buffer[2*i+1];
+    tmp[2*i] = buffer[2*globalIndex];
+    tmp[2*i+1] = buffer[2*globalIndex+1];
 
     for(int d=size>>1; d>0; d >>=1)
     {
@@ -75,6 +78,7 @@ __kernel void reduce(__global int *buffer, const int size) {
         }
     }
     barrier(CLK_LOCAL_MEM_FENCE);
-    buffer[2*i] = tmp[2*i];
-    buffer[2*i+1] = tmp[2*i+1];
+    buffer[2*globalIndex] = tmp[2*i];
+    buffer[2*globalIndex+1] = tmp[2*i+1];
+    }
 }
