@@ -81,7 +81,7 @@ int main() {
 
 
         */
-        const int LIST_SIZE_REDUCE = 1024;
+        const int LIST_SIZE_REDUCE = 4096;
         int *inputReduce = new int[LIST_SIZE_REDUCE];
         for(int i = 0; i < LIST_SIZE_REDUCE; i++) {
             inputReduce[i] = i;
@@ -91,7 +91,7 @@ int main() {
         Buffer reduceSrcBuffer = Buffer(context, CL_MEM_READ_WRITE, LIST_SIZE_REDUCE * sizeof(int));
         queue.enqueueWriteBuffer(reduceSrcBuffer, CL_TRUE, 0, LIST_SIZE_REDUCE * sizeof(int), inputReduce);
         reduceSweepKernel.setArg(0, reduceSrcBuffer);
-        //reduceSweepKernel.setArg(1, 1024);
+        //reduceSweepKernel.setArg(1, LIST_SIZE_REDUCE);
         NDRange global(LIST_SIZE_REDUCE);
         NDRange local(1024);
         queue.enqueueNDRangeKernel(reduceSweepKernel, NullRange, global, local);
