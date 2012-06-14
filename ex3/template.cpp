@@ -77,7 +77,7 @@ int main() {
 
 
         */
-        const int LIST_SIZE_REDUCE = 8;
+        const int LIST_SIZE_REDUCE = 1024;
         int *inputReduce = new int[LIST_SIZE_REDUCE];
         for(int i = 0; i < LIST_SIZE_REDUCE; i++) {
             inputReduce[i] = i;

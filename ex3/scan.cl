@@ -55,28 +55,26 @@ __kernel void reduce(__global int *buffer, const int size) {
         offset *= 2;
     }
 
-    barrier(CLK_GLOBAL_MEM_FENCE | CLK_LOCAL_MEM_FENCE);
-    /*
+    barrier(CLK_LOCAL_MEM_FENCE);
     if( i == 0) {
         tmp[size-1] = 0;
     }
 
     for(int d = 1; d < size; d *= 2){
         offset >>= 1;
-        barrier(CLK_GLOBAL_MEM_FENCE | CLK_LOCAL_MEM_FENCE);
+        barrier(CLK_LOCAL_MEM_FENCE);
 
         if (i < d)
         {
-            int ai = offset*(i+1)-1;
-            int bi = offset*(i+2)-1;
+            int ai = offset*(2*i+1)-1;
+            int bi = offset*(2*i+2)-1;
 
-            int t = tmp[ai];
+            __local int t = tmp[ai];
             tmp[ai] = tmp[bi];
             tmp[bi] += t;
         }
     }
-    */
-    barrier(CLK_GLOBAL_MEM_FENCE | CLK_LOCAL_MEM_FENCE);
+    barrier(CLK_LOCAL_MEM_FENCE);
     buffer[2*i] = tmp[2*i];
     buffer[2*i+1] = tmp[2*i+1];
 }
