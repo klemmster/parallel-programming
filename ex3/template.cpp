@@ -31,6 +31,10 @@ int main() {
         vector<Device> devices = context.getInfo<CL_CONTEXT_DEVICES>();
 
         // Create a command queue and use the first device
+        vector<int> max_Sizes;
+        devices[0].getInfo(CL_DEVICE_MAX_WORK_ITEM_SIZES, &max_Sizes);
+        for(int i=0; i<max_Sizes.size(); ++i)
+            std::cout << "MAX_WORKGROUP_SIZE: " << max_Sizes[i] << "\n";
         CommandQueue queue = CommandQueue(context, devices[0]);
 
         // Read source file
@@ -87,9 +91,9 @@ int main() {
         Buffer reduceSrcBuffer = Buffer(context, CL_MEM_READ_WRITE, LIST_SIZE_REDUCE * sizeof(int));
         queue.enqueueWriteBuffer(reduceSrcBuffer, CL_TRUE, 0, LIST_SIZE_REDUCE * sizeof(int), inputReduce);
         reduceSweepKernel.setArg(0, reduceSrcBuffer);
-        reduceSweepKernel.setArg(1, LIST_SIZE_REDUCE);
+        //reduceSweepKernel.setArg(1, 1024);
         NDRange global(LIST_SIZE_REDUCE);
-        NDRange local(LIST_SIZE_REDUCE);
+        NDRange local(1024);
         queue.enqueueNDRangeKernel(reduceSweepKernel, NullRange, global, local);
         int *resultReduce = new int[LIST_SIZE_REDUCE];
         queue.enqueueReadBuffer(reduceSrcBuffer, CL_TRUE, 0, LIST_SIZE_REDUCE * sizeof(int), resultReduce);
