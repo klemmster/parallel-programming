@@ -155,30 +155,23 @@ Compared to the first algorithm the utilization is better. Having at least as ma
 \begin{figure}[hbtp]
 \centering
 \label{fig:para_algo}
-\includegraphics[scale=1]{recur}
-\caption{Recursive Scan}
-\end{figure}
-
-\begin{figure}[hbtp]
-\centering
-\label{fig:para_algo}
 \includegraphics[scale=.75]{recur3}
 \caption{Recursive Scan - other variant}
 \end{figure}
 
-Pseudo code (for figure "`Recursive Scan - other variant"'):
+Pseudo code:
 \begin{verbatim}
 scan(ref array)
   if(array.size > 2)
     scan(array.firstPart)
     scan(array.secondPart)
-    correct(array.secondPart, with(array.firstPart))
+    correct(array.secondPart, lastElementOf(array.firstPart))
   else if(array.size == 2)
     array[1] = array[0] + array[1]
 	
-correct(ref array, firstPart)
+correct(ref array, correction)
   for(ref element : array)
-    element += lastElementOf(array)
+    element += correction
 \end{verbatim}
 
 
