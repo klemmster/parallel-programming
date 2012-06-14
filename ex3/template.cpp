@@ -9,12 +9,11 @@ using namespace cl;
 
 int main() {
     // Create the two input vectors
-    const int LIST_SIZE = 1023;
-    int *A = new int[LIST_SIZE];
-    for(int i = 0; i < LIST_SIZE; i++) {
-        A[i] = i;
+    const int LIST_SIZE_NAIVE = 1024;
+    int *inputNaive = new int[LIST_SIZE_NAIVE];
+    for(int i = 0; i < LIST_SIZE_NAIVE; i++) {
+        inputNaive[i] = i;
     }
-
    try {
         // Get available platforms
         vector<Platform> platforms;
@@ -48,34 +47,33 @@ int main() {
         program.build(devices);
 
         // Make kernel
-        Kernel reduceKernel(program, "naivParallelscan");
+        Kernel naiveKernel(program, "naivParallelscan");
 
         // Create memory buffers
-        Buffer buffer = Buffer(context, CL_MEM_READ_WRITE, LIST_SIZE * sizeof(int));
-        Buffer outputBuffer = Buffer(context, CL_MEM_WRITE_ONLY, LIST_SIZE * sizeof(int));
-        //Buffer localBuffer = Buffer(context, CL_MEM_READ_WRITE, LIST_SIZE * sizeof(int));
+        Buffer buffer = Buffer(context, CL_MEM_READ_WRITE, LIST_SIZE_NAIVE * sizeof(int));
 
-        // Copy lists A and B to the memory buffers
-        queue.enqueueWriteBuffer(buffer, CL_TRUE, 0, LIST_SIZE * sizeof(int), A);
-        //queue.enqueueWriteBuffer(localBuffer, CL_TRUE, 0, LIST_SIZE * sizeof(int), A);
+        // Copy list inputNaive to the memory buffers
+        queue.enqueueWriteBuffer(buffer, CL_TRUE, 0, LIST_SIZE_NAIVE * sizeof(int), inputNaive);
 
         // Set arguments to kernel
-        reduceKernel.setArg(0, buffer);
-        //reduceKernel.setArg(1, outputBuffer);
-        //reduceKernel.setArg(2,  sizeof(int)*LIST_SIZE, NULL);
-        reduceKernel.setArg(1, LIST_SIZE);
+        naiveKernel.setArg(0, buffer);
+        naiveKernel.setArg(1, LIST_SIZE_NAIVE);
 
-        // Run the kernel on specific ND range
-        NDRange global(LIST_SIZE);
-        NDRange local(LIST_SIZE);
-        queue.enqueueNDRangeKernel(reduceKernel, NullRange, global, local);
+        //Global: Overall Num of Elements
+        //Local: Elements per Block
+        NDRange global(LIST_SIZE_NAIVE);
+        NDRange local(LIST_SIZE_NAIVE);
+        queue.enqueueNDRangeKernel(naiveKernel, NullRange, global, local);
 
         // Read buffer C into a local list
-        int *C = new int[LIST_SIZE];
-        queue.enqueueReadBuffer(buffer, CL_TRUE, 0, LIST_SIZE * sizeof(int), C);
+        int *resultNaive = new int[LIST_SIZE_NAIVE];
+        queue.enqueueReadBuffer(buffer, CL_TRUE, 0, LIST_SIZE_NAIVE * sizeof(int), resultNaive);
 
-        for(int i = 0; i < LIST_SIZE; i ++)
-             std::cout << C[i] << std::endl;
+         std::cout << "Sum Naive Approach: " << resultNaive[LIST_SIZE_NAIVE-1] << std::endl;
+         std::cout << "ListSize: " << LIST_SIZE_NAIVE << std::endl;
+         std::cout << "Difference last two elements: " <<
+                 resultNaive[LIST_SIZE_NAIVE-1]-resultNaive[LIST_SIZE_NAIVE-2] << "\n";
+
     } catch(Error error) {
        std::cout << error.what() << "(" << error.err() << ")" << std::endl;
     }
