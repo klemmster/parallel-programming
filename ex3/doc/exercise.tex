@@ -152,12 +152,11 @@ Compared to the first algorithm the utilization is better. Having at least as ma
 \newpage
 \textbf{(d) Recursion}
 
-\begin{figure}[hbtp]
-\centering
-\label{fig:para_algo}
-\includegraphics[scale=.75]{recur3}
-\caption{Recursive Scan - other variant}
-\end{figure}
+The line of thought leads to the algorithm shown in the pseudo code and is visualized in figure 3. The algorithm splits the given array as long as the parts are larger than 2 elements. At that point the primitive task of scanning just 2 elements can be executed. Following this the right half of each split step has to be corrected (named as array.secondPart in the pseudo code). The correction is done by adding the last element of the left half (array.firstPart in pseudo code) to each element of the right half.
+
+The properties of the algorithm make it possible to execute the recursive scan on the two parts after the split individually. Nevertheless it is necassary to join the execution units before the correction is preformed because the right half (array.secondPart) depends on the result of the right half (array.firstPart). 
+
+
 
 Pseudo code:
 \begin{verbatim}
@@ -174,10 +173,11 @@ correct(ref array, correction)
     element += correction
 \end{verbatim}
 
-The line of thought leads to the algorithm shown in the pseudo code and is visualized in figure 3. The algorithm splits the given array as long as the parts are larger than 2 elements. At that point the primitive task of scanning just 2 elements can be executed. Following this the right half of each split step has to be corrected (named as array.secondPart in the pseudo code). The correction is done by adding the last element of the left half (array.firstPart in pseudo code) to each element of the right half.
-
-
-
-
+\begin{figure}[hbtp]
+\centering
+\label{fig:para_algo}
+\includegraphics[scale=.75]{recur3}
+\caption{Sequence of the recursive scan}
+\end{figure}
 
 \end{document}
