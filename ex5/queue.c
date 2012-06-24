@@ -26,8 +26,8 @@ void enqueue(struct queue* q, int data) {
 	tailSave = q->tail;
    } while(tailSave != NULL && tailSave->next != NULL && !CAS(&(q->tail), tailSave, tailSave->next));
    
-   // set head to back if needed
+   // set head to tail if needed
    if(!head) {
-	CAS(&front, NULL, back);
+	CAS(&head, NULL, tail);
    }
 }
