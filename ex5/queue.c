@@ -8,6 +8,7 @@ void enqueue(struct queue* q, int data) {
    n->data = data;
    n->next = NULL;
    
+   // insert new node at the tail
    do {
 	tailSave = q->tail;
 	toChange = NULL;
@@ -20,10 +21,12 @@ void enqueue(struct queue* q, int data) {
 	}
    } while(!CAS(toChange, tailSave, n));
    
+   // correct tail pointer if needed
    do {
 	tailSave = q->tail;
    } while(tailSave != NULL && tailSave->next != NULL && !CAS(&(q->tail), tailSave, tailSave->next));
    
+   // set head to back if needed
    if(!head) {
 	CAS(&front, NULL, back);
    }
