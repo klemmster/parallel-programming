@@ -3,6 +3,7 @@
 void enqueue(struct queue* q, int data) {
    node* tailSave = NULL;
    node** toChange = NULL;
+   int successful = 0;
 
    node* n = malloc(sizeof(node));
    n->data = data;
@@ -11,15 +12,14 @@ void enqueue(struct queue* q, int data) {
    // insert new node at the tail
    do {
 	tailSave = q->tail;
-	toChange = NULL;
 	
 	if(tailSave) {
-	  toChange = &(tailSave->next);
+	  successful = CAS(&(tailSave->next), NULL, n);
 	}
 	else {
-	  toChange = &(q->tail);
+	  successful = CAS(&(q->tail), NULL, n);
 	}
-   } while(!CAS(toChange, tailSave, n));
+   } while(!successful);
    
    // correct tail pointer if needed
    do {
