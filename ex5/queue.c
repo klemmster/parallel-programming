@@ -42,3 +42,25 @@ void enqueue(struct queue* q, int data) {
 	CAS(&(q->head), NULL, tail);
    }
 }
+
+int dequeue(struct queue* q) {
+	int data;
+	node* headSave = NULL;
+	
+	headSave = q->head;
+	
+	if(!headSave) {
+		return 0;
+	}
+	
+	do {
+		headSave = q->head; //dürfte erst im 2. durchgang aufgerufen werden
+	} while(!CAS(&(q->head), headSave, headSave->next));
+	
+	if(!q->head) {
+		q->tail = NULL;
+	}
+	
+	data = headSave->data;	
+	return data;
+}
