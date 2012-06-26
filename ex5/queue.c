@@ -1,9 +1,14 @@
 
 
+int CAS( addressOfPtr, exspectedValue, newValue  ){
+	// some magic stuff
+}
+
 void enqueue(struct queue* q, int data) {
    node* tailSave = NULL;
    node** toChange = NULL;
    int successful = 0;
+	bool tailed = false;
 
    node* n = malloc(sizeof(node));
    n->data = data;
@@ -18,13 +23,19 @@ void enqueue(struct queue* q, int data) {
 	}
 	else {
 	  successful = CAS(&(q->tail), NULL, n);
+		tailed = true;
 	}
    } while(!successful);
    
    // correct tail pointer if needed
    do {
 	tailSave = q->tail;
-   } while(tailSave != NULL && tailSave->next != NULL && !CAS(&(q->tail), tailSave, tailSave->next));
+    if(tailSave){
+		successful = CAS(&(q->tail),tailSave, tailSave->next); 
+    } else {
+		successful = CAS(&(q->tail),NULL, n );
+	}
+   } while(successful);//tailSave != NULL && tailSave->next != NULL && !CAS(&(q->tail), tailSave, tailSave->next));
    
    // set head to tail if needed
    if(!q->head) {
