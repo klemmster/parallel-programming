@@ -3,7 +3,16 @@ int CAS( address, expectedValue, newValue){};
 
 class Node {
 
-    Node(int);
+    Node(int pdata) {
+		data = pdata;
+		next = NULL;
+	}
+	
+	Node() {
+		data = 0;
+		next = NULL;
+	}
+	
     int data;
     Node* next;
 }
